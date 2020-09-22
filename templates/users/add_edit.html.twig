@@ -1,0 +1,8 @@
+{% extends 'home/index.html.twig' %}
+{% block contenu %}
+
+    {% if editMode %}
+        <h1>Modification d'un utilisateur</h1>
+     
+    {{ form(formUsers) }}    {% endif %} 
+{% endblock %}

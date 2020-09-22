@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	{% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %}
+
+	<div class="uk-position-relative">
+		<img "src={{ asset('images\1570383184.jpg') }}" alt="">
+		<div class="uk-position-top">
+			<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+				<div class="uk-navbar-left">
+					<ul class="uk-navbar-nav">
+						<li class="uk-active">
+							<a href="{{ path('home') }}">Accueil</a>
+						</li>
+						<li>
+							<a href="{{ path('app_login') }}">Connexion</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<br>
+	<br>
+
+
+	<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+
+	{{ form_start(registrationForm) }}
+	{{ form_row(registrationForm.nom) }}
+	{{ form_row(registrationForm.email) }}
+	{{ form_row(registrationForm.telephone) }}
+	{{ form_row(registrationForm.plainPassword) }}
+		<button class="uk-button uk-button-default uk-margin-small-right" type="button" uk-toggle="target: #offcanvas-usage">Condition d'utilisation</button>
+		<div id="offcanvas-usage" uk-offcanvas>
+			<div class="uk-offcanvas-bar">
+				<button class="uk-offcanvas-close" type="button" uk-close></button>
+				{{ form_row(registrationForm.agreeTerms) }}
+				{{ block("Conditions", "home/mentions.html.twig") }}
+			</div>
+		</div>
+	{{ form_end(registrationForm) }}
+{% endblock %}

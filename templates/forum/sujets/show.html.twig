@@ -1,0 +1,44 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1>{{sujets.titre}}</h1>
+	{% if sujets.messages is defined %}
+	{% for message in sujets.messages %}
+   
+	
+	
+
+
+<article class="uk-comment uk-comment-primary">
+    <header class="uk-comment-header">
+        <div class="uk-grid-medium uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+                <img class="uk-comment-avatar" src="{{ asset('images/nomImage_image//abeille_Raphael.jpg') }}" width="80" height="80" alt="">
+            </div>
+            <div class="uk-width-expand">
+                <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">{{ message.Users }}</a></h4>
+                <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                    <li><p>Publier : {{ message.CreaDate | date('d/m/Y H:i') }}</p></li>
+                    <li><p href="#">Modifier</p></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="uk-comment-body">
+        {{ message.contenu|raw }}
+    </div>
+</article>
+
+
+
+
+{% endfor %}
+	{% endif %}
+	
+
+<a class="uk-button uk-button-default uk-button-small" href="{{ path('messages_add', {idS: sujets.id}) }}">Ajouter un Message</a>
+
+{% endblock %}
+
+

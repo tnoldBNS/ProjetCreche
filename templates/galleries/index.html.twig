@@ -1,0 +1,28 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+	{% if is_granted('ROLE_EFFECTIF') %}
+<a class="uk-button uk-button-default uk-button-small" href="{{ path('galleries_add') }}">Ajouter une photo</a>
+<div class="uk-child-width-1-3@m" uk-grid>
+	{% if galleries %}
+		{% for gallerie in galleries %}
+			<div>
+				<div class="uk-card uk-card-default">
+					<div class="uk-card-media-top" uk-lightbox="animation: fade">
+						<a class="uk-inline" href="{{ asset('images/nomGallerie_image/' ~ gallerie.nomImage) }}" data-caption="{{ gallerie.description}}">
+							<img src="{{ asset('images/nomGallerie_image/' ~ gallerie.nomImage) }}" alt="">
+						</a>
+					</div>
+					<div class="uk-card-body">
+						<h3 class="uk-card-title">{{ gallerie.titre}}</h3>
+						<p>{{ gallerie.description}}</p>
+            <a class="uk-button uk-button-default uk-button-small" href="{{ path('galleries_edit', {id: gallerie.id}) }}">Modifier</a>
+				          <a class="uk-button uk-button-default uk-button-small" href="{{ path('galleries_delete', {id: gallerie.id}) }}">Supprimer</a>
+        	</div>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>
+	{% endif %}
+{% endblock %}

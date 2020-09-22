@@ -1,0 +1,18 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+ {# {{ SujetsController sujetsByTheme({{theme.id}}) }}
+	{% for sujet in sujets %}
+				<tr>
+					<td>
+						<a href="{{ path('sujet_show', {id: sujet.id}) }}">{{ sujet }}</a>
+					</td>
+					<td>
+						<a href="{{ path('sujet_edit', {id: sujet.id}) }}">Modifier</a>
+						<a href="{{ path('sujet_delete', {id: sujet.id}) }}">Supprimer</a>
+					</td>
+				</tr>
+			{% endfor %} #}
+
+{% endblock %}

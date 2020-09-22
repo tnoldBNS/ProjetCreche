@@ -1,0 +1,86 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1>Profil Membre du personnel</h1>
+
+	{% if is_granted('ROLE_EFFECTIF') %}
+		<div class="uk-card uk-card-hover uk-card-body">
+			{% if effectifs %}
+				<table id="customers" class="uk-table uk-table-striped">
+					<thead>
+						<tr id="customers">
+							<th>NOM et PRENOM</th>
+							<th>EMAIL</th>
+							<th>TELEPHONE</th>
+							<th>ADRESSE</th>
+							<th>CP</th>
+							<th>VILLE</th>
+							<th>OPTION</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="customers">
+							<td>{{ effectifs }}</td>
+							<td>{{ effectifs.email }}</td>
+							<td>{{ effectifs.tel }}</td>
+							<td>{{ effectifs.adresse }}</td>
+							<td>{{ effectifs.cp }}</td>
+							<td>{{ effectifs.ville }}</td>
+							<td>
+								<table id="customers">
+									<tr>
+										<td>
+											<a href="">Pointages</a>
+										</td>
+										<td>
+											<a href="">Absences</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="{{ path('effectifs_edit', {id: effectifs.id}) }}">Modifier</a>
+											<div uk-drop>
+												<div class="uk-card uk-card-body uk-card-default">Attention !! Modifier effectif</div>
+											</div>
+										</td>
+										<td>
+											<a href="{{ path('effectifs_delete', {id: effectifs.id}) }}">Supprimer</a>
+											<div uk-drop>
+												<div class="uk-card uk-card-body uk-card-default">Attention !! Supprimer effectif</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>					
+						</tr>
+					</tbody>
+				</table>
+			{% else %}
+				<a class="uk-button uk-button-default uk-button-small" href="{{ path('effectifs_add') }}">S'enregistrer</a>
+			{% endif %}
+		</div>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('galleries') }}">Espace Photo</a>
+
+	{% else %}
+		<button class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Effectif</button>
+
+		<div id="modal-example" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body">
+				<h2 class="uk-modal-title">Se signaler en tant que membre du personnel</h2>
+				<form action="/emailAcces" method="post">
+					<div>
+						<label for="msg">Message :</label>
+						<input name="espace" type="hidden" value="Effectif">
+						<textarea id="msg" name="user_message"></textarea>
+					</div>
+					<p class="uk-text-right">
+						<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+						<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+					</p>
+				</form>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock %}

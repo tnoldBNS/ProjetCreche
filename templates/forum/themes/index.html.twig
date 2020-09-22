@@ -1,0 +1,35 @@
+{% extends 'themes/index.html.twig' %}
+
+{% block body %}
+	<h1>Hello les themes</h1>
+
+
+	<a href="{{ path('theme_add') }}">Ajouter un thème</a>
+
+	<table class="uk-table uk-table-striped">
+		<thead>
+			<tr>
+				<th>LIBELE</th>
+				<th>MODIFIER / SUPPRIMER</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for theme in themes %}
+				<tr>
+					<td>
+						<a href="{{ path('theme_show', {id: theme.id}) }}">{{ theme }}</a>
+					</td>
+					<td>
+						<a href="{{ path('theme_edit', {id: theme.id}) }}">Modifier</a>
+						<a href="{{ path('theme_delete', {id: theme.id}) }}">Supprimer</a>
+					</td>
+				</tr>
+				<td>
+				{% include "sujets/index.html.twig" %}
+				</td>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+	<h1>Absences</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Membre</th>
+				{% if absence.enfants is defined and absence.enfants != null %}
+					<td>{{ absence.enfants }}</td>
+				{% else %}
+					<td>{{ absence.effectifs }}</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<th>Motif</th>
+				<td>{{ absence.motif }}</td>
+			</tr>
+			<tr>
+				<th>DateDebut</th>
+				<td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>DateFin</th>
+				<td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_index') }}">Retour a la liste</a>
+
+	<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+
+	{{ include('absences/_delete_form.html.twig') }}
+{% endblock %}

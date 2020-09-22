@@ -1,0 +1,20 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+<a href="{{ path('messages') }}">Retour à la liste des messages</a>
+
+{% if editMode %}
+	<h1>Modification d'un message</h1>
+{% else %}
+	<h1>Ajout d'un message</h1>
+{% endif %}
+{{ form(formMessages) }}
+{{ tinymce_init() }}
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}<script src="https://cdn.tiny.cloud/1/wbzt35x1g5r25t5wv19px7vrfscadie808sj7rt6etedkzww/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+	<script>
+		tinymce.init({selector: '#mytextarea'});
+	</script>
+{% endblock %}

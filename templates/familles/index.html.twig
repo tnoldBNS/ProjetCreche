@@ -1,0 +1,262 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1 class="h3 mb-3 font-weight-normal">Espace Famille</h1>
+
+{% if is_granted('ROLE_FAMILLE') %}
+
+	<div class="uk-card uk-card-hover uk-card-body">
+		<h3 class="h3 mb-3 font-weight-normal">Les enfants</h3>
+		{% if enfants %}
+			<table id="customers" class="uk-table uk-table-striped uk-table-small">
+
+				<tr>
+					<th>Enfant</th>
+					{% for enfant in enfants %}
+						<td>
+							<div class="uk-inline">
+								<span class="uk-margin-small-right" uk-icon="user"></span>
+								{{ enfant }}
+							</div>
+						</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>GENRE</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.genre }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>NATIONALITE</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.nationnalit }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>DATE de NAISSANCE</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.dateNaissance  | date('d/m/Y') }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>LIEU DE NAISSANCE</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.lieuNaissance }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>COMMISSION</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.commissions.nomCommission }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>DROIT DIFFUSION</th>
+					{% for enfant in enfants %}
+						<td>
+							{% if enfant.rgpd %}Oui{% else %}Non{% endif%}</td>
+						{% endfor %}
+					</tr>
+				</tr>
+				<tr id="customers">
+					<th>SYMBOLE</th>
+					{% for enfant in enfants %}
+						<td>
+							<img class="uk-inline-clip uk-transition-toggle pointeuse" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
+						</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>DATE D'ENTREE</th>
+					{% for enfant in enfants %}
+						<td>{{ enfant.dateArrivee  | date('d/m/Y') }}</td>
+					{% endfor %}
+				</tr>
+
+				<tr id="customers">
+					<th>DATE DE DEPART</th>
+					{% for enfant in enfants %}
+						<td>
+							{% if enfant.dateDepart == null %}
+								{% else %}
+									{{ enfant.dateDepart  | date('d/m/Y') }}{% endif%}</td>
+							{% endfor %}
+						</tr>
+					</tr>
+
+					<tr id="customers">
+						<th>POINTAGES</th>
+						{% for enfant in enfants %}
+							<td>
+								<a href="">Pointages</a>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>ABSENCES</th>
+
+						{% for enfant in enfants %}
+							<td>
+								<a href="">Absences</a>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>MODIFIER</th>
+						{% for enfant in enfants %}
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('enfants_edit', {id: enfant.id}) }}">Modifier</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>SUPPRIMER</th>
+						{% for enfant in enfants %}
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('enfants_delete', {id: enfant.id}) }}">Supprimer</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+				</table>
+			{% endif %}
+			<a class="uk-button uk-button-default uk-button-small" href="{{ path('enfants_add') }}">Ajouter un enfant</a>
+		</div>
+
+		<div class="uk-card uk-card-hover uk-card-body">
+			<h3 class="h3 mb-3 font-weight-normal">Les parents</h3>
+			{% if parents %}
+				<table id="customers" class="uk-table uk-table-striped">
+
+
+					<tr id="customers">
+						<th>PARENT</th>
+						{% for parent in parents %}
+							<td>
+								<div class="uk-inline">
+									<img class="uk-inline-clip uk-transition-toggle pointeuse" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
+									{{ parent }}
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>LANGUE MATERNELLE</th>
+						{% for parent in parents %}
+							<td>{{ parent.langueMaternelle }}</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>TELEPHONE</th>
+						{% for parent in parents %}
+							<td>{{ parent.telephone }}</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>EMAIL</th>
+						{% for parent in parents %}
+							<td>{{ parent.email }}</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>ADRESSE</th>
+						{% for parent in parents %}
+							<td>{{ parent.adresse }}</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>POINTAGES</th>
+						{% for parent in parents %}
+							<td><a href="{{ parent.adresse }}">Pointages</a></td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>ABSENCES</th>
+						{% for parent in parents %}
+							<td><a href="">Absences</a></td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>MODIFIER</th>
+						{% for parent in parents %}
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('parents_edit', {id: parent.id}) }}">Modifier</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+					<tr id="customers">
+						<th>SUPPRIMER</th>
+						{% for parent in parents %}
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('parents_delete', {id: parent.id}) }}">Supprimer</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+						{% endfor %}
+					</tr>
+
+
+				</table>
+			{% endif %}
+			<a class="uk-button uk-button-default uk-button-small" href="{{ path('parents_add') }}">Ajouter un parent</a>
+		</div>
+		{% else %}
+<button class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Famille</button>
+
+								<div id="modal-example" uk-modal>
+									<div class="uk-modal-dialog uk-modal-body">
+										<h2 class="uk-modal-title">Se signaler en tant que Famille</h2>
+										<form action="/emailAcces" method="post">
+											<div>
+												<label for="msg">Message :</label>
+												<input name="espace" type="hidden" value="Famille">
+												<textarea id="msg" name="user_message"></textarea>
+											</div>
+											<p class="uk-text-right">
+												<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+												<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+											</p>
+										</form>
+									</div>
+								</div>
+
+{% endif %}
+	{% endblock %}

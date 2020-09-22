@@ -1,0 +1,75 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1 class="h3 mb-3 font-weight-normal">Espace Commission</h1>
+
+
+	<div class="uk-card uk-card-hover uk-card-body">
+		<table id="customers" class="uk-table uk-table-striped">
+			<thead>
+				<h3 class="h3 mb-3 font-weight-normal">Les Commissions</h3>
+				<tr id="customers">
+					<th>LIBELLE</th>
+					{# {% if commission.familles is defined %}
+																<th>FAMILLE</th>
+															{% endif %} #}
+					
+					<th>CONTACTER</th>
+						{% if is_granted('ROLE_ADMIN') %}<th>MODIFIER</th>{% endif %}
+						{% if is_granted('ROLE_ADMIN') %}<th>SUPPRIMER</th>{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for commission in commissions %}
+					{% if commission %}
+
+						<tr id="customers">
+							<td>{{ commission.nomCommission }}</td>
+							<td>
+								<button class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Contacter</button>
+
+								<div id="modal-example" uk-modal>
+									<div class="uk-modal-dialog uk-modal-body">
+										<h2 class="uk-modal-title">{{ commission.nomCommission }}</h2>
+										<form action="/email" method="post">
+											<div>
+												<label for="msg">Message :</label>
+												<input name="id_commission" type="hidden" value="{{ commission.id }}">
+												{# <input name="id_user" type="hidden" value="{{ user.id }}"> #}
+												<textarea id="msg" name="user_message"></textarea>
+											</div>
+											<p class="uk-text-right">
+												<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+												<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+											</p>
+										</form>
+									</div>
+								</div>
+							</td>
+							{% if is_granted('ROLE_ADMIN') %}<td>
+								<div class="uk-inline">
+									<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('commissions_edit', {id: commission.id}) }}">Modifier</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>{% endif %}
+
+							{% if is_granted('ROLE_ADMIN') %}<td>
+								<div class="uk-inline">
+									<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('commissions_delete', {id: commission.id}) }}">Supprimer</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>{% endif %}
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('commissions_add') }}">Ajouter une commission</a>
+	</div>
+
+{% endblock %}

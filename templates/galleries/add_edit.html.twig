@@ -1,0 +1,12 @@
+{% extends 'home/index.html.twig' %}
+{% block contenu %}
+
+    {% if editMode %}
+        <h1>Modification d'une photo</h1>
+    {% else %}
+        <h1>Ajout d'une photo</h1>
+    {% endif %}
+    
+    {{ form(formGalleries) }}
+
+{% endblock %}

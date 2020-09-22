@@ -1,0 +1,109 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1 class="h3 mb-3 font-weight-normal">Mon compte</h1>
+
+	<div class="uk-card uk-card-hover uk-card-body">
+		<table class="uk-table uk-table-striped">
+			<thead>
+				<tr>
+					<th>ROLE</th>
+					<th>NOM</th>
+					<th>TELEPHONE</th>
+					<th>EMAIL</th>
+					<th>DATE D'INSCRIPTION</th>
+					<th>MODIFIER</th>
+					<th>SUPPRIMER</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if is_granted('ROLE_ADMIN') %}
+					{% for user in users %}
+						<tr>
+							<td>
+								{% for role in user.roles %}
+									{% if role == "ROLE_USER" %}
+										Utilisateur
+									{% elseif role == "ROLE_FAMILLE" %}
+										Famille
+									{% elseif role == "ROLE_EFFECTIF" %}
+										Effectif
+									{% elseif role == "ROLE_ADMIN" %}
+										Administrateur
+									{% endif %}
+								{% endfor %}
+							</td>
+							<td>{{ user.nom }}</td>
+							<td>{{ user.telephone }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.registerdate | date('d/m/Y') }}</td>
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('users_editByAdmin', {id: user.id}) }}">Modifier</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="uk-inline">
+									<a href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					{% else %}
+						<p>Aucun utilisateur inscrit</p>
+					{% endfor %}
+				{% else %}
+
+
+					{% for user in users %}
+						{% if app.user.id == user.id %}
+							<tr>
+								<td>
+									{% for role in user.roles %}
+										{% if role == "ROLE_USER" %}
+											Utilisateur
+										{% elseif role == "ROLE_FAMILLE" %}
+											Famille
+										{% elseif role == "ROLE_EFFECTIF" %}
+											Effectif
+										{% elseif role == "ROLE_ADMIN" %}
+											Administrateur
+											{% elseif role == "ROLE_ACCUEIL" %}
+											Accueil
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td>{{ user.nom }}</td>
+								<td>{{ user.telephone }}</td>
+								<td>{{ user.email }}</td>
+								<td>{{ user.registerdate | date('d/m/Y') }}</td>
+								<td>
+									<div class="uk-inline">
+										<a href="{{ path('users_edit', {id: user.id}) }}">Modifier</a>
+										<div uk-drop>
+											<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="uk-inline">
+										<a href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
+										<div uk-drop>
+											<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

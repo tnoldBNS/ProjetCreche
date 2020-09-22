@@ -1,0 +1,14 @@
+{% extends 'home/index.html.twig' %}
+{% block body %}
+
+    <a href="{{ path('effectifs_list') }}">Retour à la liste des effectifs</a>
+
+    {% if editMode %}
+        <h1>Modification</h1>
+    {% else %}
+        <h1>Création Fiche Membre du Personnel</h1>
+    {% endif %}
+    
+    {{ form(formEffectifs) }}
+
+{% endblock %}

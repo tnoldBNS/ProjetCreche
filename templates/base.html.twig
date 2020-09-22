@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}La Souris Verte
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<!-- UIkit CSS -->
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/css/uikit.min.css"/>
+			<link
+			href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300&display=swap" rel="stylesheet">
+			{# asset() fait référence au dossier 'public' du projet #}
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+			<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+		{% endblock %}
+	</head>
+	<body>
+		<div id="wrapper"> {% block body %}{% endblock %}
+			</div>
+			<footer>
+				<a class="mentions" href="../mentions">Mentions légales</a>
+				<div>
+					<a class="mentions" href="#">Condition d'utilisation</a>
+					<div uk-drop="mode: click">
+						<div class="uk-card uk-card-body uk-card-default">
+							{{ block("Conditions", "home/mentions.html.twig") }}
+						</div>
+					</div>
+				</div>
+				<p class="mentions">© 2020-2021, Association Crèche La Souris Verte</P>
+
+			</footer>
+			{% block javascripts %}
+				<!-- UIkit JS -->
+				<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit.min.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit-icons.min.js"></script>
+				<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+			{% endblock %}
+		</body>
+	</html>

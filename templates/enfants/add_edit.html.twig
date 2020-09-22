@@ -1,0 +1,12 @@
+{% extends 'home/index.html.twig' %}
+{% block contenu %}
+
+    {% if editMode %}
+        <h1>Modification d'un enfant</h1>
+    {% else %}
+        <h1>Ajout d'un enfant</h1>
+    {% endif %}
+    
+    {{ form(formEnfants) }}
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Absence{% endblock %}
+
+{% block body %}
+    <h1>Signaler une absence</h1>
+
+    {{ include('absences/_form.html.twig') }}
+
+    <a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_index') }}">Retour a la liste</a>
+{% endblock %}

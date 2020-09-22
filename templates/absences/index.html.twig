@@ -1,0 +1,41 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+	<h1>Les Absences</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Membre</th>
+				<th>Motif</th>
+				<th>DateDebut</th>
+				<th>DateFin</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for absence in absences %}
+				<tr>
+					{% if absence.enfants is defined and absence.enfants != null %}
+						<td>{{ absence.enfants }}</td>
+					{% else %}
+						<td>{{ absence.effectifs }}</td>
+					{% endif %}
+					<td>{{ absence.motif }}</td>
+					<td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d') : '' }}</td>
+					<td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
+					<td>
+						<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_show', {'id': absence.id}) }}">+ info</a>
+						<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Il n'y a pas d'abscence enregistré</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+{% endblock %}

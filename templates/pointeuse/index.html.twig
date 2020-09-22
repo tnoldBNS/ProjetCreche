@@ -1,0 +1,222 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1 class="h3 mb-3 font-weight-normal">POINTAGE</h1>
+
+	<div class=" pointeuse_grid uk-child-width-1-5@m" uk-grid>
+		{% if is_granted('ROLE_ACCUEIL') %}
+
+			{% if enfants is defined %}
+				{% for enfant in enfants %}
+					{% if enfant.lastPointeuse.depart is defined and enfant.lastPointeuse.depart == null %}
+						<div class="PointageOn active">
+							<a class="uk-inline-clip uk-transition-toggle " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
+								</div>
+							</a>
+							<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="comment"></a>
+							<div id="Transmission{{ enfant.id }}" uk-modal>
+								<div class="uk-modal-dialog uk-modal-body">
+									<h2 class="uk-modal-title">Nouvelle Transmission</h2>
+									<form action="/transmission" method="post">
+										<div>
+											<p>Type de Transmission:
+												<input type="radio" id="arrivee" name="type" value="Arrivée">
+												<label for="arrivee">Arrivée</label>
+												<input type="radio" id="depart" name="type" value="Départ">
+												<label for="depart">Départ</label>
+											</p>
+										</div>
+										<div>
+											<label for="msg">Message :</label>
+											<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}">
+											<textarea id="msg" name="user_message"></textarea>
+										</div>
+										<p class="uk-text-right">
+											<button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+											<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+										</p>
+									</form>
+								</div>
+							</div>
+							{% if enfant.lastpointeuse.lastTransmission %}
+								<div class="uk-inline">
+									<a class="Transmission" href="#Transmission" uk-toggle uk-icon="commenting"></a>
+									<div uk-drop>
+										<div class="uk-card uk-card-body uk-card-default">
+											<h2 class="uk-modal-title">Transmission</h2>
+
+											<h4 class="uk-comment-title uk-margin-remove">Derniere Transmission :</h4>
+											{{ enfant.lastpointeuse.transmission|last }}
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					{% else %}
+						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
+							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
+							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			{% if parents is defined %}
+				{% for parent in parents %}
+					{% if parent.lastPointeuse.depart is defined and parent.lastPointeuse.depart == null %}
+						<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
+							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
+							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
+							</div>
+						</a>
+					{% else %}
+						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
+							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
+							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			{% if effectifs is defined %}
+				{% for effectif in effectifs %}
+					{% if effectif.lastPointeuse.depart is defined and effectif.lastPointeuse.depart == null %}
+						<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active" tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
+							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
+							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
+							</div>
+						</a>
+					{% else %}
+						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
+							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
+							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+
+		{% if is_granted('ROLE_FAMILLE') %}
+			{% if enfants is defined %}
+				{% for enfant in enfants %}
+					{% if app.user.id == enfant.familles.users.id %}
+						{% if enfant.lastPointeuse.depart is defined and enfant.lastPointeuse.depart == null %}
+							<div class="PointageOn active">
+								<a class="uk-inline-clip uk-transition-toggle " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
+									<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
+									<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+										<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
+									</div>
+								</a>
+								<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="comment"></a>
+								<div id="Transmission{{ enfant.id }}" uk-modal>
+									<div class="uk-modal-dialog uk-modal-body">
+										<h2 class="uk-modal-title">Nouvelle Transmission</h2>
+										<form action="/transmission" method="post">
+											<div>
+												<p>Type de Transmission:
+													<input type="radio" id="arrivee" name="type" value="Arrivée">
+													<label for="arrivee">Arrivée</label>
+													<input type="radio" id="depart" name="type" value="Départ">
+													<label for="depart">Départ</label>
+												</p>
+											</div>
+											<div>
+												<label for="msg">Message :</label>
+												<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}">
+												<textarea id="msg" name="user_message"></textarea>
+											</div>
+											<p class="uk-text-right">
+												<button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+												<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+											</p>
+										</form>
+									</div>
+								</div>
+								{% if enfant.lastpointeuse.lastTransmission %}
+									<div class="uk-inline">
+										<a class="Transmission" href="#Transmission" uk-toggle uk-icon="commenting"></a>
+										<div uk-drop>
+											<div class="uk-card uk-card-body uk-card-default">
+												<h2 class="uk-modal-title">Transmission</h2>
+
+												<h4 class="uk-comment-title uk-margin-remove">Derniere Transmission :</h4>
+												{{ enfant.lastpointeuse.transmission|last }}
+											</div>
+										</div>
+									</div>
+								{% endif %}
+							</div>
+						{% else %}
+							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
+								</div>
+							</a>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			{% if parents is defined %}
+				{% for parent in parents %}
+					{% if app.user.id == parent.familles.users.id %}
+						{% if parent.lastPointeuse.depart is defined and parent.lastPointeuse.depart == null %}
+							<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
+								</div>
+							</a>
+						{% else %}
+							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
+								</div>
+							</a>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+
+		{% if is_granted('ROLE_EFFECTIF') %}
+			{% if effectifs is defined %}
+				{% for effectif in effectifs %}
+					{% if app.user.id == effectif.users.id %}
+
+						{% if effectif.lastPointeuse.depart is defined and effectif.lastPointeuse.depart == null %}
+							<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active" tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
+								</div>
+							</a>
+						{% else %}
+							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
+								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
+								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
+								</div>
+							</a>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+	<h1 class="h3 mb-3 font-weight-normal">FORUM</h1>
+
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('themes_add') }}">Ajouter un Thème</a>
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('sujets_add') }}">Ajouter un Sujet</a>
+	{% for theme in themes %}
+		<div class="uk-card uk-card-default uk-card-body">
+			<h3 class="uk-card-title">{{ theme.nomTheme }}</h3>
+
+			{% for sujet in theme.sujets %}
+				<a class="uk-card uk-card-default uk-card-body theme" href="{{ path('sujets_show', {id: sujet.id}) }}">
+					<p class="titreSujet">{{ sujet.titre }}</p>
+					<p class="infoSujet">Créé par :
+						{{ sujet.users }}
+						<br>Date de création:
+						{{ sujet.createDate | date('d/m/Y H:i') }}</p>
+				</a>
+			{% endfor %}
+
+		</div>
+
+	{% endfor %}
+
+{% endblock %}

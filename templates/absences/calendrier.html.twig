@@ -1,0 +1,24 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+    <div id="calendar-holder"></div>
+	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+	<script src='fullcalendar/fullcalendar.js'></script>
+	<script src='fullcalendar/lang-all.js'></script>
+{% endblock %}
