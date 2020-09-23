@@ -5,10 +5,10 @@
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Signaler une absence</a>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Enfant absent ?</a>
 	{% endif %}
 	{% if is_granted('ROLE_EFFECTIF') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Signaler une absence</a>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Effectif Absence?</a>
 	{% endif %}
 
 	<div id="calendar-holder"></div>
@@ -17,10 +17,10 @@
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Signaler une absence</a>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Enfant absent ?</a>
 	{% endif %}
 	{% if is_granted('ROLE_EFFECTIF') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Signaler une absence</a>
+		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Effectif absent ?</a>
 	{% endif %}
 {% endblock %}
 

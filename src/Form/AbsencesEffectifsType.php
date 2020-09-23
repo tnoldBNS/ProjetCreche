@@ -6,6 +6,7 @@ use App\Entity\Enfants;
 use App\Entity\Absences;
 use App\Entity\Effectifs;
 use App\Repository\EnfantsRepository;
+use App\Repository\EffectifsRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,34 +14,26 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class AbsencesType extends AbstractType
+class AbsencesEffectifsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $IdUser = $options["data"]->getUser();
         $builder
             ->add('effectifs', EntityType::class, [
                 'class' => Effectifs::class,
                 'required' => false,
+                'query_builder' => function (EffectifsRepository $effectifs) use ($IdUser) {
+                    return $effectifs->createQueryBuilder('e')
+                        ->where('e.Users = :IdUser')
+                        ->setParameter('IdUser', $IdUser);
+                },
                 'placeholder' => 'Choisir un membre du personnel',
                 'attr' => [
                     'class' => 'uk-input',
                 ]
             ])
-            ->add('enfants', EntityType::class, [
-                'class' => Enfants::class,
-                'required' => false,
-                'query_builder' => function (EnfantsRepository $enfants) {
-                    return $enfants->createQueryBuilder('e')
-                        ->where('e.dateDepart IS NULL')
-                        ->orWhere('e.dateDepart >= :val')
-                        ->setParameter('val', date('Y-m-d'));
-                        ;
-                },
-                'placeholder' => 'Choisir un Enfant',
-                'attr' => [
-                    'class' => 'uk-input',
-                ]
-            ])
+           
             ->add('motif', ChoiceType::class, [
                 'choices' => [
                     'A selectionner' => "",
