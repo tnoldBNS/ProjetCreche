@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Absences;
 use App\Form\AbsencesType;
+use App\Form\AbsencesEnfantsType;
+use App\Form\AbsencesEffectifsType;
 use App\Repository\AbsencesRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/absences")
@@ -33,7 +35,8 @@ class AbsencesController extends AbstractController
             'absences' => $absencesRepository->findAll(),
         ]);
     }
-
+    
+    
     /**
      * @Route("/new", name="absences_new", methods={"GET","POST"})
      */
@@ -41,6 +44,52 @@ class AbsencesController extends AbstractController
     {
         $absence = new Absences();
         $form = $this->createForm(AbsencesType::class, $absence);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($absence);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('absences_index');
+        }
+
+        return $this->render('absences/new.html.twig', [
+            'absence' => $absence,
+            'form' => $form->createView(),
+        ]);
+    }
+
+        /**
+     * @Route("/absencesEnfants_new", name="absencesEnfants_new", methods={"GET","POST"})
+     */
+    public function newAbsEnfants(Request $request): Response
+    {
+        $absence = new Absences();
+        $form = $this->createForm(AbsencesEnfantsType::class, $absence);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($absence);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('absences_index');
+        }
+
+        return $this->render('absences/new.html.twig', [
+            'absence' => $absence,
+            'form' => $form->createView(),
+        ]);
+    }
+
+        /**
+     * @Route("/absencesEffectifs_new", name="absencesEffectifs_new", methods={"GET","POST"})
+     */
+    public function newAbsEffectifss(Request $request): Response
+    {
+        $absence = new Absences();
+        $form = $this->createForm(AbsencesEffectifsType::class, $absence);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
