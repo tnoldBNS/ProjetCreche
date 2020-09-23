@@ -65,7 +65,8 @@ class AbsencesController extends AbstractController
      */
     public function newAbsEnfants(Request $request): Response
     {
-        $absence = new Absences();
+        $user = $this->getUser();
+        $absence = new Absences($user);
         $form = $this->createForm(AbsencesEnfantsType::class, $absence);
         $form->handleRequest($request);
 

@@ -9,7 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -17,20 +16,18 @@ class AbsencesEnfantsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options) 
     { 
-        $user = $options['users'];
-        dump($user);
-        die;
+        $IdFamilles = $options["data"]->getUser()->getFamilles();
         $builder
             ->add('enfants', EntityType::class, [
                 'class' => Enfants::class,
                 'required' => false,
-                'query_builder' => function (EnfantsRepository $enfants) use ($user) {
+                'query_builder' => function (EnfantsRepository $enfants) use ($IdFamilles) {
                     return $enfants->createQueryBuilder('e')
                         ->where('e.dateDepart IS NULL')
                         ->orWhere('e.dateDepart >= :val')
-                        ->andWhere('e.familles.users = :user')
-                        ->setParameter('val', date('Y-m-d'))
-                        ->setParameter('user', $user);
+                        ->andWhere('e.familles = :IdFamilles')
+                        ->setParameter('IdFamilles', $IdFamilles)
+                        ->setParameter('val', date('Y-m-d'));
                 },
                 'placeholder' => 'Choisir un Enfant',
                 'attr' => [
@@ -69,7 +66,6 @@ class AbsencesEnfantsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Absences::class,
-            'users' => $this->users,
         ]);
     }
 }

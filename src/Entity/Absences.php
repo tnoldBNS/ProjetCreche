@@ -42,6 +42,12 @@ class Absences
      */
     private $enfants;
 
+    
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,5 +111,9 @@ class Absences
         $this->enfants = $enfants;
 
         return $this;
+    }
+    public function getUser()
+    {
+        return $this->user;
     }
 }

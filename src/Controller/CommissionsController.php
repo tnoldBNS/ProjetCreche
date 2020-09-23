@@ -6,7 +6,6 @@ use App\Entity\Commissions;
 use App\Form\CommissionsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommissionsController extends AbstractController
@@ -54,7 +53,7 @@ class CommissionsController extends AbstractController
      * @Route("/commission/add", name="commissions_add")
      * @Route("/commission/{id}/edit", name="commissions_edit")
      */
-    public function add_edit(UserInterface $user, Commissions $commissions = null, Request $request)
+    public function add_edit(Commissions $commissions = null, Request $request)
     {
         // si le commission n'existe pas, on instancie une nouvelle commission (on est dans le cas d'un ajout)
         if (!$commissions) {
