@@ -2,10 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Enfants;
 use App\Entity\Absences;
 use App\Entity\Effectifs;
-use App\Repository\EnfantsRepository;
 use App\Repository\EffectifsRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

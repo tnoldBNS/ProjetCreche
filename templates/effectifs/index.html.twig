@@ -6,7 +6,7 @@
 
 	{% if is_granted('ROLE_EFFECTIF') %}
 		<div class="uk-card uk-card-hover uk-card-body">
-			{% if effectifs %}
+			{% if effectifs is defined and effectifs %}
 				<table id="customers" class="uk-table uk-table-striped">
 					<thead>
 						<tr id="customers">

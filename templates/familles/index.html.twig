@@ -8,7 +8,7 @@
 
 	<div class="uk-card uk-card-hover uk-card-body">
 		<h3 class="h3 mb-3 font-weight-normal">Les enfants</h3>
-		{% if enfants %}
+		{% if enfants is defined and enfants %}
 			<table id="customers" class="uk-table uk-table-striped uk-table-small">
 
 				<tr>
@@ -147,7 +147,7 @@
 
 		<div class="uk-card uk-card-hover uk-card-body">
 			<h3 class="h3 mb-3 font-weight-normal">Les parents</h3>
-			{% if parents %}
+			{% if parents is defined and parents %}
 				<table id="customers" class="uk-table uk-table-striped">
 
 

@@ -9,14 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class EffectifsController extends AbstractController
 {
     /**
      * @Route("/effectifs", name="effectifs_list")
      */
-    public function index(UserInterface $user)
+    public function index(UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
+        if (false === $authChecker->isGranted('ROLE_EFFECTIF')) {
+            return $this->render('effectifs/index.html.twig');
+        }
+
         $effectifs = $this->getDoctrine()
             ->getRepository(Effectifs::class)
             ->getOneByIdUser($user->getId());

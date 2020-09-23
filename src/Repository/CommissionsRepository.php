@@ -28,7 +28,7 @@ class CommissionsRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             "SELECT c
                 FROM App\Entity\Commissions c
-                ORDER BY c.nomCommission"
+                ORDER BY c.id"
         );
         return $query->execute();
     }

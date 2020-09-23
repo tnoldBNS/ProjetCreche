@@ -1,3 +1,6 @@
+html{
+    background-color: #F0F4DA;
+}
 body {
     width: 100%;
     height: 100%;
@@ -16,6 +19,7 @@ h1 {
     margin: auto;
     background-color: white;
 }
+
 .user{
     font-size: 4em;
     margin-top: 0.5em;

@@ -10,11 +10,7 @@
 			<thead>
 				<h3 class="h3 mb-3 font-weight-normal">Les Commissions</h3>
 				<tr id="customers">
-					<th>LIBELLE</th>
-					{# {% if commission.familles is defined %}
-																<th>FAMILLE</th>
-															{% endif %} #}
-					
+					<th>LIBELLE</th>				
 					<th>CONTACTER</th>
 						{% if is_granted('ROLE_ADMIN') %}<th>MODIFIER</th>{% endif %}
 						{% if is_granted('ROLE_ADMIN') %}<th>SUPPRIMER</th>{% endif %}
@@ -36,7 +32,6 @@
 											<div>
 												<label for="msg">Message :</label>
 												<input name="id_commission" type="hidden" value="{{ commission.id }}">
-												{# <input name="id_user" type="hidden" value="{{ user.id }}"> #}
 												<textarea id="msg" name="user_message"></textarea>
 											</div>
 											<p class="uk-text-right">
@@ -69,7 +64,9 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		{% if is_granted('ROLE_ADMIN') %}
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('commissions_add') }}">Ajouter une commission</a>
+	{% endif %}
 	</div>
 
 {% endblock %}
