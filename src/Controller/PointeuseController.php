@@ -88,6 +88,7 @@ class PointeuseController extends AbstractController
             $entityManager->persist($pointage);
             $entityManager->flush();
         }
+        
         return $this->redirectToRoute('pointageEnfants');
     }
 

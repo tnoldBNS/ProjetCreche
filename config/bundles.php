@@ -15,4 +15,5 @@ return [
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
     Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle::class => ['all' => true],
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
 ];

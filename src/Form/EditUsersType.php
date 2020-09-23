@@ -52,27 +52,6 @@ class EditUsersType extends AbstractType
                 'class' => 'uk-input',
                 'placeholder' => 'Telephone']
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'label' => false,
-                'type' => PasswordType::class,
-                'required' => false,
-                'invalid_message' => 'Le mot de passe ne correspond pas',
-                'first_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'class' => 'uk-input',
-                        'placeholder' => 'Mot de passe']
-                ],
-                'second_options' => [
-                    'label' => false,
-                    'attr' => [
-                        'class' => 'uk-input',
-                    'placeholder' => 'Répétez le mot de passe']
-                ]
-            ])
             ->add('Valider', SubmitType::class, [
                 'attr' => ['class' => 'uk-button uk-button-primary uk-margin-top']
             ]);

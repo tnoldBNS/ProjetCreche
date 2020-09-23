@@ -36,13 +36,18 @@
 								<li>
 									<a href="../absences">Calendrier</a>
 								</li>
+								{% if is_granted('ROLE_ACCUEIL') %}
+								{% else %}
 								<li>
 									<a href="../forum">forum</a>
 								</li>
+								{% endif %}
 							</ul>
 						</div>
 						<div class="uk-navbar-right">
 							<ul class="uk-navbar-nav">
+							{% if is_granted('ROLE_ACCUEIL') %}
+								{% else %}
 								<li>
 									<a href="#">Mon compte</a>
 									<div class="uk-navbar-dropdown drop">
@@ -62,6 +67,7 @@
 										</ul>
 									</div>
 								</li>
+								{% endif %}
 								<li>
 									<a href="{{ path('app_logout') }}">Se déconnecter</a>
 								</li>
@@ -70,8 +76,11 @@
 					</nav>
 				</div>
 			</div>
+		<p class="user">{{ app.user.nom }}</p>	
 		</header>
 		<main>
+
+
 			{% block contenu %}{% endblock %}
 		</main>
 	{% else %}

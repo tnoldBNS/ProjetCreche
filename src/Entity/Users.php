@@ -100,9 +100,7 @@ class Users implements UserInterface
     public function __construct()
     {
         //ajouter date et heure courante
-        if ($this->RegisterDate == null) {
             $this->RegisterDate = new \DateTime();
-        }
         //ajouter le rôle ROLE_USER par defaut
         $this->addRole("ROLE_USER");
         $this->tickets = new ArrayCollection();
