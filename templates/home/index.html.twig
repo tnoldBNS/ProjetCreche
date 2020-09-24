@@ -36,10 +36,11 @@
 										</ul>
 									</div>
 								</li>
-
-								<li>
-									<a href="../absences">Calendrier</a>
-								</li>
+								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+									<li>
+										<a href="../absences">Calendrier</a>
+									</li>
+								{% endif %}
 								{% if is_granted('ROLE_ACCUEIL') %}
 									{% else %}
 										<li>

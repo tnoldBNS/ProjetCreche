@@ -47,6 +47,9 @@ h1 {
 #customers td, #customers th {
     font-size: 12px;
 }
+#nopad{
+    padding: 0;
+}
 
 .pointeuse_grid
 {
@@ -113,4 +116,8 @@ flex: 3;
 }
 .theme .infoSujet{
 flex: 2;
+}
+.fiche{
+    font-size: 20px;
+    color: #99B507;
 }

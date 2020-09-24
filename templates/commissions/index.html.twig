@@ -4,7 +4,7 @@
 
 	<h1 class="h3 mb-3 font-weight-normal">Espace Commission</h1>
 
-
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_EFFECTIF') %}
 	<div class="uk-card uk-card-hover uk-card-body">
 		<table id="customers" class="uk-table uk-table-striped">
 			<thead>
@@ -68,5 +68,7 @@
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('commissions_add') }}">Ajouter une commission</a>
 	{% endif %}
 	</div>
-
+	{% else %}
+		<p>Vous n'avez pas accés a cette section</p>
+{% endif %}
 {% endblock %}
