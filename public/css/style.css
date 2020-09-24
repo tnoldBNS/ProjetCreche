@@ -121,3 +121,6 @@ flex: 2;
     font-size: 20px;
     color: #99B507;
 }
+.uk-card-body li{
+    font-size: 12px;
+}

@@ -173,6 +173,11 @@ class Effectifs
         return $this;
     }
 
+    public function getAdresseComplette(): ?string
+    {
+        return $this->adresse . " " . $this->cp . " " . $this->ville;
+    }
+
     public function getAdresse(): ?string
     {
         return $this->adresse;

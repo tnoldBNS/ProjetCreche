@@ -19,16 +19,24 @@ class EffectifsController extends AbstractController
     public function index(UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
         if (false === $authChecker->isGranted('ROLE_EFFECTIF')) {
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $effectifs = $this->getDoctrine()
+            ->getRepository(Effectifs::class)
+            ->getAll();
+
+        return $this->render('effectifs/index.html.twig', [
+            'effectifs' => $effectifs,
+            ]);
+            }
             return $this->render('effectifs/index.html.twig');
         }
 
         $effectifs = $this->getDoctrine()
             ->getRepository(Effectifs::class)
-            ->getOneByIdUser($user->getId());
+            ->getAllByIdUser($user->getId());
 
         return $this->render('effectifs/index.html.twig', [
-            'effectifs' => $effectifs,
-            
+            'effectifs' => $effectifs, 
         ]);
     }
 

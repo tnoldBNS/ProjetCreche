@@ -34,16 +34,18 @@ class EffectifsRepository extends ServiceEntityRepository
     }
 
     
-    public function getOneByIdUser($user_id): ?Effectifs
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.Users = :val')
-            ->setParameter('val', $user_id)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+    public function getAllByIdUser($user_id) {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT e
+                FROM App\Entity\Effectifs e
+                WHERE e.Users = :val"
+        )
+        ->setParameter('val', $user_id);
+        return $query->execute();
     }
-    
+
+
     // /**
     //  * @return Effectifs[] Returns an array of Effectifs objects
     //  */

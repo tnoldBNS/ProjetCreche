@@ -4,7 +4,7 @@
 
 	<h1 class="h3 mb-3 font-weight-normal">Espace Famille</h1>
 
-	{% if is_granted('ROLE_FAMILLE') %}
+	{% if is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN')%}
 		<h3 class="h3 mb-3 font-weight-normal">Les enfants</h3>
 		{% if enfants is defined and enfants %}
 			<div class="uk-child-width-1-2@m pointeuse_grid" uk-grid>
@@ -63,8 +63,9 @@
 				{% endfor %}
 			</div>
 		{% endif %}
-		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('enfants_add') }}">Ajouter un enfant</a>
-
+		{% if is_granted('ROLE_FAMILLE') %}
+			<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('enfants_add') }}">Ajouter un enfant</a>
+		{% endif %}
 
 		<h3 class="h3 mb-3 font-weight-normal">Les parents</h3>
 		{% if parents is defined and parents %}
@@ -89,7 +90,7 @@
 									<div class="fiche">{{ parent.langueMaternelle }}</div>
 								</li>
 								<li>ADRESSE
-									<div class="fiche">{{ parent.adresse }}</div>
+									<div class="fiche">{{ parent.adresseComplette }}</div>
 								</li>
 							</ul>
 						</div>
@@ -103,26 +104,29 @@
 				{% endfor %}
 			</div>
 		{% endif %}
-		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('parents_add') }}">Ajouter un parent</a>
-
+		{% if is_granted('ROLE_FAMILLE') %}
+			<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('parents_add') }}">Ajouter un parent</a>
+		{% endif %}
 	{% else %}
-		<button id="button" class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Famille</button>
+		{% if is_granted('ROLE_FAMILLE') %}
+			<button id="button" class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Famille</button>
 
-		<div id="modal-example" uk-modal>
-			<div class="uk-modal-dialog uk-modal-body">
-				<h2 class="uk-modal-title">Se signaler en tant que Famille</h2>
-				<form action="/emailAcces" method="post">
-					<div>
-						<label for="msg">Message :</label>
-						<input name="espace" type="hidden" value="Famille">
-						<textarea id="msg" name="user_message"></textarea>
-					</div>
-					<p class="uk-text-right">
-						<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-						<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
-					</p>
-				</form>
+			<div id="modal-example" uk-modal>
+				<div class="uk-modal-dialog uk-modal-body">
+					<h2 class="uk-modal-title">Se signaler en tant que Famille</h2>
+					<form action="/emailAcces" method="post">
+						<div>
+							<label for="msg">Message :</label>
+							<input name="espace" type="hidden" value="Famille">
+							<textarea id="msg" name="user_message"></textarea>
+						</div>
+						<p class="uk-text-right">
+							<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+							<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+						</p>
+					</form>
+				</div>
 			</div>
-		</div>
+		{% endif %}
 	{% endif %}
 {% endblock %}

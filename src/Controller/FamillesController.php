@@ -19,6 +19,21 @@ class FamillesController extends AbstractController
     public function index(UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
         if (false === $authChecker->isGranted('ROLE_FAMILLE')) {
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $enfants = $this->getDoctrine()
+                ->getRepository(Enfants::class)
+                ->getAll();
+        
+                $parents = $this->getDoctrine()
+                ->getRepository(Parents::class)
+                ->getAll();
+
+                return $this->render('familles\index.html.twig', [
+                    'enfants' => $enfants,
+                    'parents' => $parents,
+                ]);
+
+            }
             return $this->render('familles\index.html.twig');
         }
 
