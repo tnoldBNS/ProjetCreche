@@ -1,7 +1,7 @@
 {% extends 'home/index.html.twig' %}
 
 {% block contenu %}
-	{% if is_granted('ROLE_ACCUEIL') %}
+	{% if is_granted('ROLE_ADMIN') %}
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}
@@ -13,7 +13,7 @@
 
 	<div id="calendar-holder"></div>
 
-	{% if is_granted('ROLE_ACCUEIL') %}
+	{% if is_granted('ROLE_ADMIN') %}
 		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}

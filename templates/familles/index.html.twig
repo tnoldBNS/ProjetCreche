@@ -108,7 +108,6 @@
 			<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('parents_add') }}">Ajouter un parent</a>
 		{% endif %}
 	{% else %}
-		{% if is_granted('ROLE_FAMILLE') %}
 			<button id="button" class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Famille</button>
 
 			<div id="modal-example" uk-modal>
@@ -127,6 +126,5 @@
 					</form>
 				</div>
 			</div>
-		{% endif %}
 	{% endif %}
 {% endblock %}

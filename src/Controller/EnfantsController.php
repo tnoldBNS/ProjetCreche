@@ -7,11 +7,15 @@ use App\Form\EnfantsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/enfants")
+ * @security("is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN')")
+ * 
  */
 class EnfantsController extends AbstractController
 {
@@ -20,6 +24,9 @@ class EnfantsController extends AbstractController
      */
     public function index()
     {
+
+        echo "reussi";
+        die;
         $enfants = $this->getDoctrine()
             ->getRepository(Enfants::class)
             ->getAll();
@@ -30,23 +37,30 @@ class EnfantsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="enfants_delete")
+     * @Route("/{id}/deleteEnfants", name="enfants_delete")
      */
-    public function delete(Enfants $enfants)
+    public function delete(UserInterface $user, AuthorizationCheckerInterface $authChecker, Enfants $enfants)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($enfants);
-        $entityManager->flush();
+        if ($enfants->getFamilles()->getUsers()->getId() == $user->getId() || true === $authChecker->isGranted('ROLE_ADMIN')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($enfants);
+            $entityManager->flush();
+        } else {
+        }
         return $this->redirectToRoute('familles');
     }
 
 
     /**
-     * @Route("/add", name="enfants_add")
-     * @Route("/{id}/edit", name="enfants_edit")
+     * @Route("/addEnfant", name="enfants_add")
+     * @Route("/{id}/editEnfant", name="enfants_edit")
      */
-    public function add_edit(UserInterface $user, Enfants $enfants = null, Request $request)
+    public function add_edit(UserInterface $user, AuthorizationCheckerInterface $authChecker, Enfants $enfants = null, Request $request)
     {
+        if (($enfants && $enfants->getFamilles()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {     
+            return $this->redirectToRoute('familles');
+        }
+
         // si le Enfant n'existe pas, on instancie un nouveau Enfant (on est dans le cas d'un ajout)
         if (!$enfants) {
             $enfants = new Enfants($user->getFamilles());
@@ -60,7 +74,7 @@ class EnfantsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // on récupère les données du formulaire
             $enfants = $form->getData();
-            
+
             // on ajoute le nouvel enfant
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($enfants);
@@ -76,16 +90,6 @@ class EnfantsController extends AbstractController
         return $this->render('enfants/add_edit.html.twig', [
             'formEnfants' => $form->createView(),
             'editMode' => $enfants->getId() !== null
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="enfants_show", methods="GET")
-     */
-    public function show(Enfants $enfants): Response
-    {
-        return $this->render('enfants/show.html.twig', [
-            'enfants' => $enfants
         ]);
     }
 }

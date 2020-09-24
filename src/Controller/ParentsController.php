@@ -8,11 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
  * @Route("/parents")
+ * @security("is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN')")
  */
 class ParentsController extends AbstractController
 {
@@ -31,29 +34,34 @@ class ParentsController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="parents_delete")
+     * @Route("/{id}/deleteParents", name="parents_delete")
      */
-    public function delete(Parents $parents)
+    public function delete(UserInterface $user, AuthorizationCheckerInterface $authChecker, Parents $parents)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($parents);
-        $entityManager->flush();
+        if ($parents->getFamilles()->getUsers()->getId() == $user->getId() || true === $authChecker->isGranted('ROLE_ADMIN')) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($parents);
+            $entityManager->flush();
+        } else {
+        }
         return $this->redirectToRoute('familles');
     }
 
-
     /**
-     * @Route("/add", name="parents_add")
-     * @Route("/{id}/edit", name="parents_edit")
+     * @Route("/addParents", name="parents_add")
+     * @Route("/{id}/editParents", name="parents_edit")
      */
-    public function add_edit(UserInterface $user, Parents $parents = null, Request $request)
+    public function add_edit(UserInterface $user, AuthorizationCheckerInterface $authChecker, Parents $parents = null, Request $request)
     {
+        if (($parents && $parents->getFamilles()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {     
+            return $this->redirectToRoute('familles');
+        }
+
         // si le Parent n'existe pas, on instancie un nouveau parent (on est dans le cas d'un ajout)
         if (!$parents) {
             $parents = new Parents($user->getFamilles());
         }
-
-        // il faut créer un parentsType au préalable (php bin/console make:form
+         // il faut créer un parentsType au préalable (php bin/console make:form
         $form = $this->createForm(ParentsType::class, $parents);
 
         $form->handleRequest($request);
@@ -76,16 +84,6 @@ class ParentsController extends AbstractController
         return $this->render('parents/add_edit.html.twig', [
             'formParents' => $form->createView(),
             'editMode' => $parents->getId() !== null
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="enfants_show", methods="GET")
-     */
-    public function show(Parents $parents): Response
-    {
-        return $this->render('parents/show.html.twig', [
-            'enfants' => $parents
         ]);
     }
 }

@@ -6,12 +6,15 @@ use App\Entity\Enfants;
 use App\Entity\Parents;
 use App\Entity\Effectifs;
 use App\Entity\Pointeuse;
-use App\Entity\Galleries;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN') or is_granted('ROLE_ACCUEIL')")
+ */
 class PointeuseController extends AbstractController
 {
     /**
@@ -69,8 +72,12 @@ class PointeuseController extends AbstractController
     /**
      * @Route("/{id}/enfants_pointage", name="enfants_pointage")
      */
-    public function enfant_pointage(Enfants $enfants)
+    public function enfant_pointage(UserInterface $user, AuthorizationCheckerInterface $authChecker, Enfants $enfants)
     {
+        if (($enfants && $enfants->getFamilles()->getUsers()->getId() != $user->getId()) && (false === $authChecker->isGranted('ROLE_ADMIN') || false === $authChecker->isGranted('ROLE_ACCUEIL')) ) {     
+            return $this->redirectToRoute('pointageEnfants');
+        }
+        
         $pointage = $this->getDoctrine()
         ->getRepository(Pointeuse::class)
         ->getAllByEnfantId($enfants->getId());
@@ -95,8 +102,11 @@ class PointeuseController extends AbstractController
         /**
      * @Route("/{id}/parents_pointage", name="parents_pointage")
      */
-    public function parent_pointage(Parents $parents)
+    public function parent_pointage(UserInterface $user, AuthorizationCheckerInterface $authChecker, Parents $parents)
     {
+        if (($parents && $parents->getFamilles()->getUsers()->getId() != $user->getId()) && (false === $authChecker->isGranted('ROLE_ADMIN') || false === $authChecker->isGranted('ROLE_ACCUEIL')) ) {     
+            return $this->redirectToRoute('pointageParents');
+        }
         $pointage = $this->getDoctrine()
         ->getRepository(Pointeuse::class)
         ->getAllByParentId($parents->getId());
@@ -120,8 +130,11 @@ class PointeuseController extends AbstractController
         /**
      * @Route("/{id}/effectifs_pointage", name="effectifs_pointage")
      */
-    public function effectif_pointage(Effectifs $effectifs)
+    public function effectif_pointage(UserInterface $user, AuthorizationCheckerInterface $authChecker, Effectifs $effectifs)
     {
+        if (($effectifs && $effectifs->getUsers()->getId() != $user->getId()) && (false === $authChecker->isGranted('ROLE_ADMIN') || false === $authChecker->isGranted('ROLE_ACCUEIL')) ) {     
+            return $this->redirectToRoute('pointageEffectifs');
+        }
         $pointage = $this->getDoctrine()
         ->getRepository(Pointeuse::class)
         ->getAllByEffectifId($effectifs->getId());
@@ -141,52 +154,5 @@ class PointeuseController extends AbstractController
         }
         return $this->redirectToRoute('pointageEffectifs');
     }
-
-    
-
-
-    // /**
-    //  * @Route("/pointEnfant", name="pointEnfant")
-    //  */
-    // public function pointEnfant(Request $req){
-    //     $id = $req->query->get("id");
-    //     $pointEnfant = $this->id[$id];
-    //     if($req->isXmlHttpRequest()){
-    //             $html = $this->renderView("pointeuse\index.html.twig", [
-    //             "pointEnfant" => $pointEnfant
-    //             ]);
-    //         return new Response($html);
-    //     }
-    //     else{
-    //         return $this->render("pointeuse\index.html.twig", [
-    //         "pointEnfant" => $pointEnfant
-    //         ]);
-    //     } 
-    // }   
-
-    //  /**
-    //  * @Route("/{id}/enfants_pointage", name="enfants_pointage")
-    //  */
-    // public function enfant_pointage(Enfants $enfants)
-    // {
-    //     $pointage = $this->getDoctrine()
-    //     ->getRepository(Pointeuse::class)
-    //     ->getAllByEnfantId($enfants->getId());
-
-    //     if (!$pointage || $pointage[0]->getDepart()) {
-    //         $pointage = new Pointeuse();
-    //         $pointage->setEnfants($enfants);
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->persist($pointage);
-    //         $entityManager->flush();
-    //     } else {
-    //         $dateTimeDepart = new \DateTime();
-    //         $pointage = $pointage[0]->setDepart($dateTimeDepart);
-    //         $entityManager = $this->getDoctrine()->getManager();
-    //         $entityManager->persist($pointage);
-    //         $entityManager->flush();
-    //     }
-    //     return $this->redirectToRoute('pointageEnfants');
-    // }
 }
 

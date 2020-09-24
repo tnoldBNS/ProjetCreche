@@ -9,7 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @security("is_granted('ROLE_ADMIN')")
+ */
 class ThemesController extends AbstractController
 {
     /**

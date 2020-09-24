@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\Galleries;
 use App\Form\GalleriesType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ADMIN')")
+ */
 class GalleriesController extends AbstractController
 {
     /**
@@ -66,15 +69,4 @@ class GalleriesController extends AbstractController
             'editMode' => $galleries->getId() !== null
         ]);
     }
-
-    // /**
-    //  * @Route("/{id}", name="galleries_show", methods="GET")
-    //  */
-    // public function show(Galleries $galleries): Response
-    // {
-    //     return $this->render('galleries/show.html.twig', [
-    //         'galleries' => $galleries
-    //     ]);
-    // }
-
 }

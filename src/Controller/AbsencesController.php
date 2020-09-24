@@ -10,10 +10,14 @@ use App\Repository\AbsencesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/absences")
+ * @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN') or is_granted('ROLE_ACCUEIL')")
  */
 class AbsencesController extends AbstractController
 {
@@ -39,6 +43,7 @@ class AbsencesController extends AbstractController
     
     /**
      * @Route("/new", name="absences_new", methods={"GET","POST"})
+     * @security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request): Response
     {
@@ -62,6 +67,7 @@ class AbsencesController extends AbstractController
 
         /**
      * @Route("/absencesEnfants_new", name="absencesEnfants_new", methods={"GET","POST"})
+     * @security("is_granted('ROLE_FAMILLE')")
      */
     public function newAbsEnfants(Request $request): Response
     {
@@ -86,6 +92,7 @@ class AbsencesController extends AbstractController
 
         /**
      * @Route("/absencesEffectifs_new", name="absencesEffectifs_new", methods={"GET","POST"})
+     * @security("is_granted('ROLE_EFFECTIF')")
      */
     public function newAbsEffectifss(Request $request): Response
     {
@@ -121,8 +128,11 @@ class AbsencesController extends AbstractController
     /**
      * @Route("/{id}/edit", name="absences_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Absences $absence): Response
+    public function edit(UserInterface $user, AuthorizationCheckerInterface $authChecker, Request $request, Absences $absence): Response
     {
+        if (($absence->getEnfants()->getFamilles()->getUsers()->getId() != $user->getId() || $absence->getEffectifs()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('absences_index');
+        }
         $form = $this->createForm(AbsencesType::class, $absence);
         $form->handleRequest($request);
 
@@ -141,14 +151,16 @@ class AbsencesController extends AbstractController
     /**
      * @Route("/{id}", name="absences_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Absences $absence): Response
+    public function delete(UserInterface $user, AuthorizationCheckerInterface $authChecker, Request $request, Absences $absence): Response
     {
+        if (($absence->getEnfants()->getFamilles()->getUsers()->getId() != $user->getId() || $absence->getEffectifs()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('absences_index');
+        }
         if ($this->isCsrfTokenValid('delete'.$absence->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($absence);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('absences_index');
     }
 }

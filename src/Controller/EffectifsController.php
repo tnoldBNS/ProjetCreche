@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\Effectifs;
 use App\Form\EffectifsType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+* @security("is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')")
+*/
 class EffectifsController extends AbstractController
 {
     /**
@@ -21,12 +24,12 @@ class EffectifsController extends AbstractController
         if (false === $authChecker->isGranted('ROLE_EFFECTIF')) {
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 $effectifs = $this->getDoctrine()
-            ->getRepository(Effectifs::class)
-            ->getAll();
+                    ->getRepository(Effectifs::class)
+                    ->getAll();
 
-        return $this->render('effectifs/index.html.twig', [
-            'effectifs' => $effectifs,
-            ]);
+                return $this->render('effectifs/index.html.twig', [
+                    'effectifs' => $effectifs,
+                ]);
             }
             return $this->render('effectifs/index.html.twig');
         }
@@ -36,18 +39,21 @@ class EffectifsController extends AbstractController
             ->getAllByIdUser($user->getId());
 
         return $this->render('effectifs/index.html.twig', [
-            'effectifs' => $effectifs, 
+            'effectifs' => $effectifs,
         ]);
     }
 
     /**
-     * @Route("/{id}/delete", name="effectifs_delete")
+     * @Route("/{id}/deleteEffectifs", name="effectifs_delete")
      */
-    public function delete(Effectifs $effectifs)
+    public function delete(UserInterface $user, AuthorizationCheckerInterface $authChecker, Effectifs $effectifs)
     {
+        if ($effectifs->getUsers()->getId() != $user->getId() || true === $authChecker->isGranted('ROLE_ADMIN')) {
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($effectifs);
-        $entityManager->flush();
+            $entityManager->remove($effectifs);
+            $entityManager->flush();
+        } else {
+        }
         return $this->redirectToRoute('effectifs_list');
     }
 
@@ -55,12 +61,16 @@ class EffectifsController extends AbstractController
      * @Route("/add", name="effectifs_add")
      * @Route("/{id}/edit", name="effectifs_edit")
      */
-    public function add_edit(UserInterface $user, Effectifs $effectifs = null, Request $request)
+    public function add_edit(UserInterface $user, AuthorizationCheckerInterface $authChecker, Effectifs $effectifs = null, Request $request)
     {
+
+        if (($effectifs && $effectifs->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('effectifs_list');
+        }
+
         // si le effectifs n'existe pas, on instancie un nouveau Effectifs (on est dans le cas d'un ajout)
         if (!$effectifs) {
             $effectifs = new Effectifs();
-            
         }
 
         // il faut créer un EffectifsType au préalable (php bin/console make:form
@@ -89,14 +99,4 @@ class EffectifsController extends AbstractController
             'editMode' => $effectifs->getId() !== null
         ]);
     }
-
-    // /**
-    //  * @Route("/{id}", name="effectifs_show", methods="GET")
-    //  */
-    // public function show(Effectifs $effectifs): Response
-    // {
-    //     return $this->render('effectifs/show.html.twig', [
-    //         'effectifs' => $effectifs
-    //     ]);
-    // }
 }

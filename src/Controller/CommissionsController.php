@@ -7,29 +7,17 @@ use App\Form\CommissionsType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+/**
+* @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN')")
+*/ 
 class CommissionsController extends AbstractController
 {
-
-        /**
-     * Afficher la liste des commissions
-     */
-    public function getAll() {
-        $entityManager = $this->getEntityManager();
-        // requête DQL : liste des commissions triés par ordre alphabetique
-        $query = $entityManager->createQuery(
-            "SELECT c
-                FROM App\Entity\Commissions c
-                ORDER BY c.nomCommission"
-        );
-        return $query->execute();
-    }
     /**
      * @Route("/commissions", name="commissions")
      */
     public function index()
     {
-
         $commissions = $this->getDoctrine()
             ->getRepository(Commissions::class)
             ->getAll();
@@ -38,8 +26,10 @@ class CommissionsController extends AbstractController
             'commissions' => $commissions,
         ]);
     }
+
     /**
-     * @Route("/{id}/delete", name="commissions_delete")
+     * @Route("/{id}/deletecommissions", name="commissions_delete")
+     * @security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Commissions $commissions)
     {
@@ -52,6 +42,7 @@ class CommissionsController extends AbstractController
     /**
      * @Route("/commission/add", name="commissions_add")
      * @Route("/commission/{id}/edit", name="commissions_edit")
+     * @security("is_granted('ROLE_ADMIN')")
      */
     public function add_edit(Commissions $commissions = null, Request $request)
     {
@@ -61,7 +52,7 @@ class CommissionsController extends AbstractController
             
         }
 
-        // il faut créer un VommissionsType au préalable (php bin/console make:form
+        // il faut créer un CommissionsType au préalable (php bin/console make:form
         $form = $this->createForm(CommissionsType::class, $commissions);
          $form->handleRequest($request);
         // si on soumet le formulaire et que le form est valide

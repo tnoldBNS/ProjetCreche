@@ -21,22 +21,22 @@
 		<div id="wrapper"> {% block body %}{% endblock %}
 			</div>
 			<footer>
-				<a class="mentions" href="../mentions">Mentions légales</a>
-				<div>
-					<a class="mentions" href="#">Condition d'utilisation</a>
-					<div uk-drop="mode: click">
-						<div class="uk-card uk-card-body uk-card-default">
-							{{ block("Conditions", "home/mentions.html.twig") }}
-						</div>
+				<a class="mentions" href="../mentions">Mentions légales</a><br>
+				<a class="mentions" uk-toggle="target: #offcanvas-usage">Condition d'utilisation</a>
+				<div id="offcanvas-usage" uk-offcanvas>
+					<div class="uk-offcanvas-bar">
+						<button class="uk-offcanvas-close" type="button" uk-close></button>
+						{{ block("Conditions", "home/mentions.html.twig") }}
 					</div>
 				</div>
-				<p class="mentions">© 2020-2021, Association Crèche La Souris Verte</P>
-			</footer>
-			{% block javascripts %}
-				<!-- UIkit JS -->
-				<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit.min.js"></script>
-				<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit-icons.min.js"></script>
-				<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
-			{% endblock %}
+			</div>
+			<p class="mentions">© 2020-2021, Association Crèche La Souris Verte</P>
 		</body>
 	</html>
+</footer>
+{% block javascripts %}
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.3/dist/js/uikit-icons.min.js"></script>
+	<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+{% endblock %}</body></html>

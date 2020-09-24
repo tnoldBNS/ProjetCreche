@@ -2,7 +2,7 @@
 
 {% block contenu %}
 	{% if is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ADMIN') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('galleries_add') }}">Ajouter une photo</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('galleries_add') }}">Ajouter une photo</a>
 		<div class="uk-child-width-1-3@m" uk-grid>
 			{% if galleries %}
 				{% for gallerie in galleries %}

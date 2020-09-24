@@ -9,9 +9,12 @@ use App\Security\AppCustomAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -53,6 +56,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/listUsers", name="listUsers")
+     * @security("is_granted('ROLE_USER')
      */
     public function listUsers()
     {
@@ -67,17 +71,22 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/{id}/deleteUsers", name="users_delete")
+     * @security("is_granted('ROLE_USER')
      */
-    public function delete(Users $users)
+    public function delete(Users $users, UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        if ($users->getId() == $user->getId() || true === $authChecker->isGranted('ROLE_ADMIN')) {
+      $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($users);
         $entityManager->flush();
+        }else{
+        }
         return $this->redirectToRoute('listUsers');
     }
 
     /**
      * @Route("/{id}/editUsersByAdmin", name="users_editByAdmin")
+     * @security("is_granted('ROLE_ADMIN')
      */
     public function editByAdmin(Users $users = null, Request $request)
     {
@@ -101,9 +110,13 @@ class RegistrationController extends AbstractController
 
         /**
      * @Route("/{id}/editUsers", name="users_edit")
+     * @security("is_granted('ROLE_USER')
      */
-    public function edit(Users $users = null, Request $request)
+    public function edit(Users $users = null, Request $request, UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
+        if ($users->getId() != $user->getId()) {
+            return $this->redirectToRoute('listUsers');
+        }
         $form = $this->createForm(RegistrationFormType::class, $users);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -17,9 +17,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/reset-password")
+ * @security("is_granted('ROLE_USER')")
  */
 class ResetPasswordController extends AbstractController
 {
