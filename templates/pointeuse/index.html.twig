@@ -4,7 +4,7 @@
 
 	<h1 class="h3 mb-3 font-weight-normal">POINTAGE</h1>
 
-	<div class=" pointeuse_grid uk-child-width-1-5@m" uk-grid>
+	<div class=" pointeuse_grid uk-child-width-1-6@m" uk-grid>
 		{% if is_granted('ROLE_ACCUEIL') or is_granted('ROLE_ADMIN') %}
 
 			{% if enfants is defined %}
@@ -17,7 +17,8 @@
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 								</div>
 							</a>
-							<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="comment"></a>
+							<br>
+							<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="icon: comment; ratio: 1.5"></a>
 							<div id="Transmission{{ enfant.id }}" uk-modal>
 								<div class="uk-modal-dialog uk-modal-body">
 									<h2 class="uk-modal-title">Nouvelle Transmission</h2>
@@ -44,8 +45,8 @@
 							</div>
 							{% if enfant.lastpointeuse.lastTransmission %}
 								<div class="uk-inline">
-									<a class="Transmission" href="#Transmission" uk-toggle uk-icon="commenting"></a>
-									<div uk-drop>
+									<a class="Transmission" href="#Transmission" uk-toggle uk-icon="icon: commenting; ratio: 1.5"></a>
+									<div uk-drop="pos: bottom-center">
 										<div class="uk-card uk-card-body uk-card-default">
 											<h2 class="uk-modal-title">Transmission</h2>
 
@@ -120,7 +121,7 @@
 										<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 									</div>
 								</a>
-								<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="comment"></a>
+								<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="icon: comment; ratio: 1.5"></a>
 								<div id="Transmission{{ enfant.id }}" uk-modal>
 									<div class="uk-modal-dialog uk-modal-body">
 										<h2 class="uk-modal-title">Nouvelle Transmission</h2>
@@ -147,8 +148,8 @@
 								</div>
 								{% if enfant.lastpointeuse.lastTransmission %}
 									<div class="uk-inline">
-										<a class="Transmission" href="#Transmission" uk-toggle uk-icon="commenting"></a>
-										<div uk-drop>
+										<a class="Transmission" href="#Transmission" uk-toggle uk-icon="icon: commenting; ratio: 1.5"></a>
+										<div uk-drop="pos: bottom-center">
 											<div class="uk-card uk-card-body uk-card-default">
 												<h2 class="uk-modal-title">Transmission</h2>
 

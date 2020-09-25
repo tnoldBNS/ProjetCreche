@@ -4,7 +4,7 @@
 
 	<h1 class="h3 mb-3 font-weight-normal">Mon compte</h1>
 
-		<table class="uk-table uk-table-striped">
+		<table class=" table uk-table uk-table-striped uk-table-responsive">
 			<thead>
 				<tr>
 					<th>ROLE</th>
@@ -16,7 +16,7 @@
 					<th>SUPPRIMER</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="tester">
 				{% if is_granted('ROLE_ADMIN') %}
 					{% for user in users %}
 						<tr>

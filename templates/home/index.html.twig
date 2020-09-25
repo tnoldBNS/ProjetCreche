@@ -6,6 +6,74 @@
 {% block body %}
 	{% if app.user %}
 		<header>
+			<div id="screenNav">
+				<a class="uk-inline">
+					<span uk-navbar-toggle-icon></span>
+					<span class="uk-margin-small-left">Menu</span>
+				</a>
+				<div uk-dropdown="pos: bottom-justify">
+					<ul class="uk-nav uk-dropdown-nav">
+						<li>
+							<a href="{{ path('home') }}">Accueil</a>
+						</li>
+						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+							<a href="#">Pointeuse</a>
+							<div uk-dropdown="pos: bottom-justify">
+								<ul class="uk-nav uk-dropdown-nav">
+									{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') %}
+										<li>
+											<a href="../pointageEnfants">Pointeuse Enfants</a>
+										</li>
+										<li>
+											<a href="../pointageParents">Pointeuse Parents</a>
+										</li>
+									{% endif %}
+									{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ACCUEIL') %}
+										<li>
+											<a href="../pointageEffectifs">Pointeuse Effectifs</a>
+										</li>
+									{% endif %}
+								</ul>
+							</div>
+						{% endif %}
+						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+							<li>
+								<a href="../absences">Calendrier</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_EFFECTIF') and is_granted('ROLE_FAMILLE') and is_granted('ROLE_ADMIN') %}
+							<li>
+								<a href="../forum">Forum</a>
+							</li>
+						{% endif %}
+						{% if is_granted('ROLE_ACCUEIL') %}
+							{% else %}
+								<a href="#">Mon compte</a>
+								<div uk-dropdown="pos: bottom-justify">
+									<ul class="uk-nav uk-dropdown-nav">
+										<li>
+											<a href="../listUsers">Gestion Utilisateur</a>
+										</li>
+										<li>
+											<a href="../familles">Espace des Familles</a>
+										</li>
+										<li>
+											<a href="../effectifs">Espace du personnel</a>
+										</li>
+										{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+											<li>
+												<a href="../commissions">Contact Commissions</a>
+											</li>
+										{% endif %}
+									</ul>
+								</div>
+						{% endif %}
+						<li>
+							<a href="{{ path('app_logout') }}">Se déconnecter</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<img class="banner" src="{{ asset('images/Titre.jpg') }}">
 			<div id="destopNav" class="uk-position-relative navbar">
 				<div class="uk-position-top">
@@ -84,75 +152,6 @@
 					</nav>
 				</div>
 			</div>
-
-<div id="screenNav" >
-			<a class="uk-inline">
-				<span uk-navbar-toggle-icon></span>
-				<span class="uk-margin-small-left">Menu</span>
-			</a>
-			<div uk-dropdown="pos: bottom-justify">
-				<ul class="uk-nav uk-dropdown-nav">
-					<li>
-						<a href="{{ path('home') }}">Accueil</a>
-					</li>
-					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
-						<a href="#">Pointeuse</a>
-						<div uk-dropdown="pos: bottom-justify">
-							<ul class="uk-nav uk-dropdown-nav">
-								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') %}
-									<li>
-										<a href="../pointageEnfants">Pointeuse Enfants</a>
-									</li>
-									<li>
-										<a href="../pointageParents">Pointeuse Parents</a>
-									</li>
-								{% endif %}
-								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ACCUEIL') %}
-									<li>
-										<a href="../pointageEffectifs">Pointeuse Effectifs</a>
-									</li>
-								{% endif %}
-							</ul>
-						</div>
-					{% endif %}
-					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
-						<li>
-							<a href="../absences">Calendrier</a>
-						</li>
-					{% endif %}
-					{% if is_granted('ROLE_EFFECTIF') and is_granted('ROLE_FAMILLE') and is_granted('ROLE_ADMIN') %}
-						<li>
-							<a href="../forum">Forum</a>
-						</li>
-					{% endif %}
-					{% if is_granted('ROLE_ACCUEIL') %}
-						{% else %}
-							<a href="#">Mon compte</a>
-							<div uk-dropdown="pos: bottom-justify">
-								<ul class="uk-nav uk-dropdown-nav">
-									<li>
-										<a href="../listUsers">Gestion Utilisateur</a>
-									</li>
-									<li>
-										<a href="../familles">Espace des Familles</a>
-									</li>
-									<li>
-										<a href="../effectifs">Espace du personnel</a>
-									</li>
-									{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
-										<li>
-											<a href="../commissions">Contact Commissions</a>
-										</li>
-									{% endif %}
-								</ul>
-							</div>
-					{% endif %}
-					<li>
-						<a href="{{ path('app_logout') }}">Se déconnecter</a>
-					</li>
-				</ul>
-			</div>
-</div>
 			<p class="user">{{ app.user.nom }}</p>
 		</header>
 		<main>

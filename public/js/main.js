@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         ],
         header: {
-            left: 'pre,next today',
+            left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay',
         },

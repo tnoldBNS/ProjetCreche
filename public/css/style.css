@@ -1,3 +1,4 @@
+
 html {
     background-color: #F0F4DA;
 }
@@ -146,8 +147,12 @@ label {
 .uk-card-body li {
     font-size: 12px;
 }
+.table{
+    text-align: center;
+    justify-content: center;
+}
 
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 750px) {
     /* For mobile phones: */
     #wrapper {
         width: 100%;
@@ -159,9 +164,12 @@ label {
     #screenNav {
         display: initial;
         color: #99B507;
+        margin-bottom: 0.5em;
+        font-size: 1.2em;
     }
-    #screenNav a{
+    #screenNav a {
         color: #99B507;
+        font-size: 1.2em;
     }
     .mentions {
         font-size: 0.8em;
@@ -173,4 +181,25 @@ label {
         text-align: center;
         color: #edf2ea;
     }
+    textarea {
+        width: 250px;
+        height: 150px;
+    }
+    .fc-toolbar {
+        font-size: 0.5em;
+    }
+    .fc-view {
+        font-size: 0.7em;
+    }
+    div .fc-right {
+        display: none;
+    }
+    .uk-width-expand {
+        padding-right: 8em;
+    }
+    table, tbody, tr, td, div{
+        overflow: unset !important; 
+        height: unset !important;
+    }
+   
 }
