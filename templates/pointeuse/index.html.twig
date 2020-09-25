@@ -5,7 +5,7 @@
 	<h1 class="h3 mb-3 font-weight-normal">POINTAGE</h1>
 
 	<div class=" pointeuse_grid uk-child-width-1-5@m" uk-grid>
-		{% if is_granted('ROLE_ACCUEIL') %}
+		{% if is_granted('ROLE_ACCUEIL') or is_granted('ROLE_ADMIN') %}
 
 			{% if enfants is defined %}
 				{% for enfant in enfants %}
@@ -219,4 +219,38 @@
 			{% endif %}
 		{% endif %}
 	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div>
+			<button id="button" class="uk-button uk-button-default uk-button-small" type="button" href="#Impression" uk-toggle="target: #ImpressionEnfants">Impression des pointages</button>
+			<div id="ImpressionEnfants" uk-modal>
+				<div class="uk-modal-dialog uk-modal-body">
+					<h2 class="uk-modal-title">Nouvelle Impression</h2>
+					<form action="/impression" method="post">
+						<div>
+							<p>Membres concerné :
+								<input type="radio" id="enfants" name="type" value="enfants">
+								<label for="enfants">Enfants</label>
+								<input type="radio" id="parents" name="type" value="parents">
+								<label for="parents">Parents</label>
+								<input type="radio" id="effectifs" name="type" value="effectifs">
+								<label for="effectifs">Personnels</label>
+							</p>
+						</div>
+						<div>
+							<label for="FirstDate">A partir de :</label>
+							<input class="uk-input" type="date" id="FirstDate" name="FirstDate">
+						</div>
+						<div>
+							<label for="LastDate">Jusqu'à :</label>
+							<input class="uk-input" type="date" id="LastDate" name="LastDate">
+						</div>
+						<p class="uk-text-right">
+							<button id="button" class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+							<button id="button" class="uk-button uk-button-default" type="submit">Envoyer</button>
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}

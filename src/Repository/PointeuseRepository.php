@@ -96,6 +96,59 @@ class PointeuseRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    /**
+     * recuperer les pointage des enfants sur une plage de temps definit par deux dates
+     */
+    public function getAllEnfantsByDate($firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.enfants IS NOT NULL
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
+
+    /**
+     * recuperer les pointage des parents sur une plage de temps definit par deux dates
+     */
+    public function getAllParentsByDate($firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.parents IS NOT NULL
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
+
+            /**
+     * recuperer les pointage des parents sur une plage de temps definit par deux dates
+     */
+    public function getAllEffectifsByDate($firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.effectifs IS NOT NULL
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
 
     // /**
     //  * @return Pointeuse[] Returns an array of Pointeuse objects

@@ -16,7 +16,11 @@ class AbsencesEffectifsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $IdUser = $options["data"]->getUser();
+        if ($options["data"]->getEffectifs()) {
+            $IdUser = $options["data"]->getEffectifs()->getUsers();
+        } else {
+            $IdUser = $options["data"]->getUser();
+        }
         $builder
             ->add('effectifs', EntityType::class, [
                 'class' => Effectifs::class,
@@ -31,7 +35,7 @@ class AbsencesEffectifsType extends AbstractType
                     'class' => 'uk-input',
                 ]
             ])
-           
+
             ->add('motif', ChoiceType::class, [
                 'choices' => [
                     'A selectionner' => "",

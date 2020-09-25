@@ -39,8 +39,8 @@ class AbsencesController extends AbstractController
             'absences' => $absencesRepository->findAll(),
         ]);
     }
-    
-    
+
+
     /**
      * @Route("/new", name="absences_new", methods={"GET","POST"})
      * @security("is_granted('ROLE_ADMIN')")
@@ -65,7 +65,7 @@ class AbsencesController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/absencesEnfants_new", name="absencesEnfants_new", methods={"GET","POST"})
      * @security("is_granted('ROLE_FAMILLE')")
      */
@@ -90,7 +90,7 @@ class AbsencesController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/absencesEffectifs_new", name="absencesEffectifs_new", methods={"GET","POST"})
      * @security("is_granted('ROLE_EFFECTIF')")
      */
@@ -130,18 +130,30 @@ class AbsencesController extends AbstractController
      */
     public function edit(UserInterface $user, AuthorizationCheckerInterface $authChecker, Request $request, Absences $absence): Response
     {
-        if (($absence->getEnfants()->getFamilles()->getUsers()->getId() != $user->getId() || $absence->getEffectifs()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('absences_index');
+        if ($absence->getEnfants() != null) {
+            $IdUserAbsence = $absence->getEnfants()->getFamilles()->getUsers()->getId();
+            if (($IdUserAbsence != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('absences_index');
+            }
+            $form = $this->createForm(AbsencesEnfantsType::class, $absence);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('absences_index');
+            }
+        } else {
+            $IdUserAbsence = $absence->getEffectifs()->getUsers()->getId();
+
+            if (($IdUserAbsence != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('absences_index');
+            }
+            $form = $this->createForm(AbsencesEffectifsType::class, $absence);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('absences_index');
+            }
         }
-        $form = $this->createForm(AbsencesType::class, $absence);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('absences_index');
-        }
-
         return $this->render('absences/edit.html.twig', [
             'absence' => $absence,
             'form' => $form->createView(),
@@ -153,10 +165,15 @@ class AbsencesController extends AbstractController
      */
     public function delete(UserInterface $user, AuthorizationCheckerInterface $authChecker, Request $request, Absences $absence): Response
     {
-        if (($absence->getEnfants()->getFamilles()->getUsers()->getId() != $user->getId() || $absence->getEffectifs()->getUsers()->getId() != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
+        if ($absence->getEnfants() != null) {
+            $IdUserAbsence = $absence->getEnfants()->getFamilles()->getUsers()->getId();
+        } else {
+            $IdUserAbsence = $absence->getEffectifs()->getUsers()->getId();
+        }
+        if (($IdUserAbsence != $user->getId()) && false === $authChecker->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('absences_index');
         }
-        if ($this->isCsrfTokenValid('delete'.$absence->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $absence->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($absence);
             $entityManager->flush();

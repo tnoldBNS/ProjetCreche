@@ -16,7 +16,12 @@ class AbsencesEnfantsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options) 
     { 
-        $IdFamilles = $options["data"]->getUser()->getFamilles();
+       
+        if ($options["data"]->getEnfants()) {
+        $IdFamilles = $options["data"]->getEnfants()->getFamilles();
+        }else{   
+            $IdFamilles = $options["data"]->getUser()->getFamilles();
+        }
         $builder
             ->add('enfants', EntityType::class, [
                 'class' => Enfants::class,

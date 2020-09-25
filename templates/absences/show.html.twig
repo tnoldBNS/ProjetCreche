@@ -28,9 +28,17 @@
 		</tbody>
 	</table>
 
-	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_index') }}">Retour a la liste</a>
+	<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_index') }}">Retour a la liste</a>
 
-	<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
-
+	{% if absence.enfants is defined and absence.enfants != null %}
+		{% if absence.enfants.familles.users == app.user or is_granted('ROLE_ADMIN') %}
+	<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
 	{{ include('absences/_delete_form.html.twig') }}
+		{% endif %}	
+	{% else %}
+	{% if absence.effectifs.Users == app.user == app.user or is_granted('ROLE_ADMIN') %}
+	<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+	{{ include('absences/_delete_form.html.twig') }}
+		{% endif %}	
+	{% endif %}
 {% endblock %}

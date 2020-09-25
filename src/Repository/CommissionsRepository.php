@@ -49,7 +49,7 @@ class CommissionsRepository extends ServiceEntityRepository
                 AND e.dateDepart >= :val1
                 OR e.dateDepart IS NULL"     
         )
-        ->setParameter('val', $commission_id)('val1')
+        ->setParameter('val', $commission_id)
         ->setParameter('val1', date('Y-m-d'));
         return $query->execute();
     }

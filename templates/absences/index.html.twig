@@ -26,7 +26,16 @@
 					<td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d') : '' }}</td>
 					<td>
 						<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_show', {'id': absence.id}) }}">+ info</a>
-						<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+						{% if absence.enfants is defined and absence.enfants != null %}
+							{% if absence.enfants.familles.users == app.user or is_granted('ROLE_ADMIN') %}
+								<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+							{% endif %}
+						{% else %}
+							{% if absence.effectifs.Users == app.user == app.user or is_granted('ROLE_ADMIN') %}
+								<a class="uk-button uk-button-secondary uk-button-small" href="{{ path('absences_edit', {'id': absence.id}) }}">Modifier</a>
+							{% endif %}
+						{% endif %}
+
 					</td>
 				</tr>
 			{% else %}
@@ -36,6 +45,13 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+	{% endif %}
+	{% if is_granted('ROLE_FAMILLE') %}
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Absence Enfant</a>
+	{% endif %}
+	{% if is_granted('ROLE_EFFECTIF') %}
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Absence Personnel</a>
+	{% endif %}
 {% endblock %}

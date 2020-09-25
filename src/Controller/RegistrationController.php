@@ -56,7 +56,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/listUsers", name="listUsers")
-     * @security("is_granted('ROLE_USER')
+     * @security("is_granted('ROLE_USER')")
      */
     public function listUsers()
     {
@@ -71,7 +71,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/{id}/deleteUsers", name="users_delete")
-     * @security("is_granted('ROLE_USER')
+     * @security("is_granted('ROLE_USER')")
      */
     public function delete(Users $users, UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {
@@ -86,7 +86,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @Route("/{id}/editUsersByAdmin", name="users_editByAdmin")
-     * @security("is_granted('ROLE_ADMIN')
+     * @security("is_granted('ROLE_ADMIN')")
      */
     public function editByAdmin(Users $users = null, Request $request)
     {
@@ -110,7 +110,7 @@ class RegistrationController extends AbstractController
 
         /**
      * @Route("/{id}/editUsers", name="users_edit")
-     * @security("is_granted('ROLE_USER')
+     * @security("is_granted('ROLE_USER')")
      */
     public function edit(Users $users = null, Request $request, UserInterface $user, AuthorizationCheckerInterface $authChecker)
     {

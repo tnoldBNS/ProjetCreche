@@ -2,25 +2,25 @@
 
 {% block contenu %}
 	{% if is_granted('ROLE_ADMIN') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Enfant absent ?</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Absence Enfant</a>
 	{% endif %}
 	{% if is_granted('ROLE_EFFECTIF') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Effectif Absence?</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Absence Personnel</a>
 	{% endif %}
 
 	<div id="calendar-holder"></div>
 
 	{% if is_granted('ROLE_ADMIN') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absences_new') }}">Signaler une absence</a>
 	{% endif %}
 	{% if is_granted('ROLE_FAMILLE') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Enfant absent ?</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEnfants_new') }}">Absence Enfant</a>
 	{% endif %}
 	{% if is_granted('ROLE_EFFECTIF') %}
-		<a class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Effectif absent ?</a>
+		<a id="button" class="uk-button uk-button-default uk-button-small" href="{{ path('absencesEffectifs_new') }}">Absence Personnel</a>
 	{% endif %}
 {% endblock %}
 

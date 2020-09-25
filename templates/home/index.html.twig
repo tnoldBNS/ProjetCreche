@@ -16,36 +16,37 @@
 								<li class="uk-active">
 									<a href="{{ path('home') }}">Accueil</a>
 								</li>
-								<li>
-									<a href="#">Pointeuse</a>
-									<div class="uk-navbar-dropdown drop">
-										<ul class="uk-nav uk-navbar-dropdown-nav">
-											{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') %}
-												<li>
-													<a href="../pointageEnfants">Enfants</a>
-												</li>
-												<li>
-													<a href="../pointageParents">Parents</a>
-												</li>
-											{% endif %}
-											{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ACCUEIL') %}
-												<li>
-													<a href="../pointageEffectifs">Effectifs</a>
-												</li>
-											{% endif %}
-										</ul>
-									</div>
-								</li>
+								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+									<li>
+										<a href="#">Pointeuse</a>
+										<div class="uk-navbar-dropdown drop">
+											<ul class="uk-nav uk-navbar-dropdown-nav">
+												{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') %}
+													<li>
+														<a href="../pointageEnfants">Enfants</a>
+													</li>
+													<li>
+														<a href="../pointageParents">Parents</a>
+													</li>
+												{% endif %}
+												{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EFFECTIF') or is_granted('ROLE_ACCUEIL') %}
+													<li>
+														<a href="../pointageEffectifs">Effectifs</a>
+													</li>
+												{% endif %}
+											</ul>
+										</div>
+									</li>
+								{% endif %}
 								{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
 									<li>
 										<a href="../absences">Calendrier</a>
 									</li>
 								{% endif %}
-								{% if is_granted('ROLE_ACCUEIL') %}
-									{% else %}
-										<li>
-											<a href="../forum">forum</a>
-										</li>
+								{% if is_granted('ROLE_EFFECTIF') and is_granted('ROLE_FAMILLE') and is_granted('ROLE_ADMIN') %}
+									<li>
+										<a href="../forum">forum</a>
+									</li>
 								{% endif %}
 							</ul>
 						</div>
@@ -66,9 +67,11 @@
 													<li>
 														<a href="../effectifs">Espace du personnel</a>
 													</li>
-													<li>
-														<a href="../commissions">Contact Commissions</a>
-													</li>
+													{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ACCUEIL') or is_granted('ROLE_EFFECTIF') %}
+														<li>
+															<a href="../commissions">Contact Commissions</a>
+														</li>
+													{% endif %}
 												</ul>
 											</div>
 										</li>
