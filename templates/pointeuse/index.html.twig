@@ -32,7 +32,7 @@
 										</div>
 										<div>
 											<label for="msg">Message :</label>
-											<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}">
+											<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}" required>
 											<textarea id="msg" name="user_message"></textarea>
 										</div>
 										<p class="uk-text-right">
@@ -135,7 +135,7 @@
 											</div>
 											<div>
 												<label for="msg">Message :</label>
-												<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}">
+												<input name="id_lastPointeuse" type="hidden" value="{{ enfant.lastpointeuse.id }}" required>
 												<textarea id="msg" name="user_message"></textarea>
 											</div>
 											<p class="uk-text-right">
@@ -238,11 +238,11 @@
 						</div>
 						<div>
 							<label for="FirstDate">A partir de :</label>
-							<input class="uk-input" type="date" id="FirstDate" name="FirstDate">
+							<input class="uk-input" type="date" id="FirstDate" name="FirstDate" required>
 						</div>
 						<div>
 							<label for="LastDate">Jusqu'à :</label>
-							<input class="uk-input" type="date" id="LastDate" name="LastDate">
+							<input class="uk-input" type="date" id="LastDate" name="LastDate" required>
 						</div>
 						<p class="uk-text-right">
 							<button id="button" class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>

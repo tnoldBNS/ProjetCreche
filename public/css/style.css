@@ -1,26 +1,36 @@
-html{
+html {
     background-color: #F0F4DA;
 }
+
 body {
     width: 100%;
     height: 100%;
     font-size: 16px;
     font-family: 'roboto';
     background-color: #F0F4DA;
-    padding: 4em;
 }
+
 h1 {
     text-align: center;
 }
+
 #wrapper {
     padding: 4em;
-    max-width: 900px;
-    min-height: 500px;
+    width: 80%;
     margin: auto;
     background-color: white;
 }
 
-.user{
+.banner {
+    display: block;
+    margin: auto;
+}
+
+#screenNav {
+    display: none;
+}
+
+.user {
     font-size: 4em;
     margin-top: 0.5em;
     margin-bottom: 0;
@@ -33,12 +43,13 @@ h1 {
     margin-top: -5em;
     text-align: center;
 }
+
 #log {
     text-align: center;
     justify-content: center;
 }
 
-#button{
+#button {
     margin: 1em;
     border-color: #99B507;
     color: #99B507;
@@ -47,12 +58,12 @@ h1 {
 #customers td, #customers th {
     font-size: 12px;
 }
-#nopad{
+
+#nopad {
     padding: 0;
 }
 
-.pointeuse_grid
-{
+.pointeuse_grid {
     justify-content: space-evenly;
     margin: 0;
 }
@@ -64,63 +75,102 @@ h1 {
     margin: 0.5em;
     border: solid;
     border-width: 0.2em;
-    border-color: darkgrey;    
+    border-color: darkgrey;
     background-color: white;
 }
 
-.PointageOn{
+.PointageOn {
     padding: 0;
     text-align: center;
     border: solid;
-    border-color: #99B507; 
+    border-color: #99B507;
     color: #99B507;
     border-width: 0.4em;
 }
-img.imgPointage{
+
+img.imgPointage {
     height: 8em;
     width: 8em;
 }
-.Transmission{
-margin-top: 1em;
+
+.Transmission {
+    margin-top: 1em;
 }
+
 textarea {
     width: 450px;
     height: 150px;
-  }
-label
-{
+}
+
+label {
     margin-top: 1em;
 }
-.espace
-{
+
+.espace {
     margin-top: 1em;
 }
-#calendar-holder{
+
+#calendar-holder {
     margin-top: 2em;
     margin-bottom: 2em;
 }
-.mentions{
-    color: #95b6bd ;
+
+.mentions {
+    color: #95b6bd;
     text-align: justify;
     text-justify: inter-word;
 }
-.gallerie{
+
+.gallerie {
     display: block;
     margin: auto;
 }
-.theme{
+
+.theme {
     display: flex;
 }
-.theme .titreSujet{
-flex: 3;
+
+.theme .titreSujet {
+    flex: 3;
 }
-.theme .infoSujet{
-flex: 2;
+
+.theme .infoSujet {
+    flex: 2;
 }
-.fiche{
+
+.fiche {
     font-size: 20px;
     color: #99B507;
 }
-.uk-card-body li{
+
+.uk-card-body li {
     font-size: 12px;
+}
+
+@media only screen and (max-width: 1050px) {
+    /* For mobile phones: */
+    #wrapper {
+        width: 100%;
+        padding: 1em;
+    }
+    #destopNav {
+        display: none;
+    }
+    #screenNav {
+        display: initial;
+        color: #99B507;
+    }
+    #screenNav a{
+        color: #99B507;
+    }
+    .mentions {
+        font-size: 0.8em;
+    }
+    .user {
+        font-size: 2em;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        text-align: center;
+        color: #edf2ea;
+    }
 }

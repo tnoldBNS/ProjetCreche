@@ -34,9 +34,14 @@ class PointeuseController extends AbstractController
      */
     public function impression()
     {
-        $impressionEntity = $_POST["type"];
+        
+        $impressionEntity = filter_var($_POST["type"], FILTER_SANITIZE_STRING);
         $firstDate = $_POST["FirstDate"];
         $lastDate = $_POST["LastDate"];
+
+        if (!strtotime($firstDate) || !strtotime($lastDate)) {
+            return $this->render('home');
+        }
         if ($impressionEntity == "enfants") {
             $pointage = $this->getDoctrine()
                 ->getRepository(Pointeuse::class)
@@ -53,30 +58,60 @@ class PointeuseController extends AbstractController
                 ->getAllEffectifsByDate($firstDate, $lastDate);
         }
 
-        foreach ($pointage as $key => $value) {
-            echo $value->getParents();
-        }
-        // dump($pointage);
-        die;
-
-
         $spreadsheet = new Spreadsheet();
 
         /* @var $sheet \PhpOffice\PhpSpreadsheet\Writer\Xlsx\Worksheet */
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
+        if ($impressionEntity == "enfants") {
+            $line = 1;
+            foreach ($pointage as $value) {
+                $nom = $value->getEnfants()->getNom();
+                $prenom = $value->getEnfants()->getPrenom();
+                $dateTimeArrivee = $value->getArrivee();
+                $dateTimeDepart = $value->getDepart();
+                $sheet->setCellValue("A$line", $nom);
+                $sheet->setCellValue("B$line", $prenom);
+                $sheet->setCellValue("C$line", $dateTimeArrivee);
+                $sheet->setCellValue("D$line", $dateTimeDepart);
+                $line++;
+            }
+        }
+        if ($impressionEntity == "parents") {
+            $line = 1;
+            foreach ($pointage as $value) {
+                $nom = $value->getParents()->getNom();
+                $prenom = $value->getParents()->getPrenom();
+                $dateTimeArrivee = $value->getArrivee();
+                $dateTimeDepart = $value->getDepart();
+                $sheet->setCellValue("A$line", $nom);
+                $sheet->setCellValue("B$line", $prenom);
+                $sheet->setCellValue("C$line", $dateTimeArrivee);
+                $sheet->setCellValue("D$line", $dateTimeDepart);
+                $line++;
+            }
+        }
+        if ($impressionEntity == "effectifs") {
+            $line = 1;
+            foreach ($pointage as $value) {
+                $nom = $value->getEffectifs()->getNom();
+                $prenom = $value->getEffectifs()->getPrenom();
+                $dateTimeArrivee = $value->getArrivee();
+                $dateTimeDepart = $value->getDepart();
+                $sheet->setCellValue("A$line", $nom);
+                $sheet->setCellValue("B$line", $prenom);
+                $sheet->setCellValue("C$line", $dateTimeArrivee);
+                $sheet->setCellValue("D$line", $dateTimeDepart);
+                $line++;
+            }
+        }
         $sheet->setTitle("$impressionEntity");
-
         // Create your Office 2007 Excel (XLSX Format)
         $writer = new Xlsx($spreadsheet);
-
         // Create a Temporary file in the system
         $fileName = 'Extraction pointage.xlsx';
         $temp_file = tempnam(sys_get_temp_dir(), $fileName);
-
         // Create the excel file in the tmp directory of the system
         $writer->save($temp_file);
-
         // Return the excel file as an attachment
         return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
     }

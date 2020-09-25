@@ -21,7 +21,7 @@ class TransmissionController extends AbstractController
     public function index()
     {
         $pointeuse_id = $_POST["id_lastPointeuse"];
-        $contenu = $_POST["user_message"];
+        $contenu = filter_var($_POST["user_message"], FILTER_SANITIZE_STRING);
         $type = $_POST["type"];
         $pointeuse = $this->getDoctrine()
             ->getRepository(Pointeuse::class)

@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     calendar.render();
 });
-
+UIkit.slider(element, options);
+UIkit.slider(element).show(index);
 
 
