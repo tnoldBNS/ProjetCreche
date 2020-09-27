@@ -45,6 +45,18 @@ class EffectifsRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    /**
+     * recuperer un effectif complet par rapport a son id
+     */
+    public function getOneByID($id): ?Effectifs
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
     // /**
     //  * @return Effectifs[] Returns an array of Effectifs objects

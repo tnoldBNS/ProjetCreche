@@ -17,9 +17,10 @@ h1 {
 
 #wrapper {
     padding: 4em;
-    width: 80%;
+    width: 75%;
     margin: auto;
     background-color: white;
+    min-width: 255px;
 }
 
 .banner {
@@ -51,17 +52,14 @@ h1 {
 }
 
 #button {
-    margin: 1em;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
     border-color: #99B507;
     color: #99B507;
 }
 
 #customers td, #customers th {
     font-size: 12px;
-}
-
-#nopad {
-    padding: 0;
 }
 
 .pointeuse_grid {
@@ -148,8 +146,47 @@ label {
     font-size: 12px;
 }
 .table{
-    text-align: center;
+    display: table;
+}
+.uk-comment-body{
+margin-bottom: 0.5em;
+white-space: nowrap;
+}
+.uk-grid-column-medium, .uk-grid-medium {
+     margin-left: 0em;
+}
+.uk-grid {
+    margin-left: 0em;
     justify-content: center;
+}
+.uk-card{
+   margin: 0.2em; 
+   max-width: 380px;
+}
+
+article{
+    margin: 1em;
+    min-width: 230px;
+    
+}
+table, tbody, tr, td, div{
+    overflow: unset !important; 
+    height: unset !important;
+    
+}
+.PointageOn{
+    max-width: 240px;
+}
+#NoPadding{
+padding-left: 0;
+}
+
+@media only screen and (max-width: 1050px) {
+    /* For mobile phones: */
+    #wrapper {
+        width: 100%;
+        padding: 1em;
+    }
 }
 
 @media only screen and (max-width: 750px) {
@@ -197,9 +234,5 @@ label {
     .uk-width-expand {
         padding-right: 8em;
     }
-    table, tbody, tr, td, div{
-        overflow: unset !important; 
-        height: unset !important;
-    }
-   
+
 }

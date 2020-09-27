@@ -4,106 +4,89 @@
 
 	<h1 class="h3 mb-3 font-weight-normal">Mon compte</h1>
 
-		<table class=" table uk-table uk-table-striped uk-table-responsive">
-			<thead>
-				<tr>
-					<th>ROLE</th>
-					<th>NOM</th>
-					<th>TELEPHONE</th>
-					<th>EMAIL</th>
-					<th>DATE D'INSCRIPTION</th>
-					<th>MODIFIER</th>
-					<th>SUPPRIMER</th>
-				</tr>
-			</thead>
-			<tbody id="tester">
-				{% if is_granted('ROLE_ADMIN') %}
-					{% for user in users %}
-						<tr>
-							<td>
-								{% for role in user.roles %}
-									{% if role == "ROLE_USER" %}
-										Utilisateur
-									{% elseif role == "ROLE_FAMILLE" %}
-										Famille
-									{% elseif role == "ROLE_EFFECTIF" %}
-										Effectif
-									{% elseif role == "ROLE_ADMIN" %}
-										Administrateur
-										{% elseif role == "ROLE_ACCUEIL" %}
-										Poste d'accueil
-									{% endif %}
-								{% endfor %}
-							</td>
-							<td>{{ user.nom }}</td>
-							<td>{{ user.telephone }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{ user.registerdate | date('d/m/Y') }}</td>
-							<td>
-								<div class="uk-inline">
-									<a href="{{ path('users_editByAdmin', {id: user.id}) }}">Modifier</a>
-									<div uk-drop>
-										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="uk-inline">
-									<a href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
-									<div uk-drop>
-										<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-					{% else %}
-						<p>Aucun utilisateur inscrit</p>
-					{% endfor %}
-				{% else %}
-
-
-					{% for user in users %}
-						{% if app.user.id == user.id %}
-							<tr>
-								<td>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="uk-grid-medium uk-child-width-1-4@m" uk-grid>
+			{% for user in users %}
+				<article class="uk-comment uk-card uk-card-default uk-card-body">
+					<header class="uk-comment-header">
+						<div class="uk-grid-medium uk-flex-middle" uk-grid>
+							<div class="uk-width-expand">
+								<h4 class="uk-comment-title uk-margin-remove">
+									<a class="uk-link-reset" href="#">{{ user.nom }}</a>
+								</h4>
+								<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
 									{% for role in user.roles %}
 										{% if role == "ROLE_USER" %}
-											Utilisateur
+											<li>Utilisateur</li>
 										{% elseif role == "ROLE_FAMILLE" %}
-											Famille
+											<li>Famille</li>
 										{% elseif role == "ROLE_EFFECTIF" %}
-											Effectif
+											<li>Effectif</li>
 										{% elseif role == "ROLE_ADMIN" %}
-											Administrateur
-											{% elseif role == "ROLE_ACCUEIL" %}
-											Accueil
+											<li>Administrateur</li>
+										{% elseif role == "ROLE_ACCUEIL" %}
+											<li>Poste d'accueil</li>
 										{% endif %}
 									{% endfor %}
-								</td>
-								<td>{{ user.nom }}</td>
-								<td>{{ user.telephone }}</td>
-								<td>{{ user.email }}</td>
-								<td>{{ user.registerdate | date('d/m/Y') }}</td>
-								<td>
-									<div class="uk-inline">
-										<a href="{{ path('users_edit', {id: user.id}) }}">Modifier</a>
-										<div uk-drop>
-											<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
-										</div>
-									</div>
-								</td>
-								<td>
-									<div class="uk-inline">
-										<a href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
-										<div uk-drop>
-											<div class="uk-card uk-card-body uk-card-default">Attention !!</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-						{% endif %}
-					{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</header>
+					<div class="uk-comment-body">
+						<li>{{ user.telephone }}</li>
+						<li>{{ user.email }}</li>
+						<li>{{ user.registerdate | date('d/m/Y') }}</li>
+					</div>
+					<div class="uk-comment-body uk-position-bottom-center">
+						<a id="button" class="uk-button uk-button-default uk-button-small" uk-tooltip="Attention !" href="{{ path('users_editByAdmin', {id: user.id}) }}">Modifier</a>
+						<a id="button" class="uk-button uk-button-default uk-button-small" uk-tooltip="Attention !" href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
+					</div>
+				</article>
+			{% else %}
+				<p>Aucun utilisateur inscrit</p>
+			{% endfor %}
+		</div>
+	{% else %}
+		<div class="uk-grid-medium uk-child-width-1-4@m" uk-grid>
+			{% for user in users %}
+				{% if app.user.id == user.id %}
+					<article class="uk-comment uk-card uk-card-default uk-card-body">
+						<header class="uk-comment-header">
+							<div class="uk-grid-medium uk-flex-middle" uk-grid>
+								<div class="uk-width-expand">
+									<h4 class="uk-comment-title uk-margin-remove">
+										<a class="uk-link-reset" href="#">{{ user.nom }}</a>
+									</h4>
+									<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+										{% for role in user.roles %}
+											{% if role == "ROLE_USER" %}
+												<li>Utilisateur</li>
+											{% elseif role == "ROLE_FAMILLE" %}
+												<li>Famille</li>
+											{% elseif role == "ROLE_EFFECTIF" %}
+												<li>Effectif</li>
+											{% elseif role == "ROLE_ADMIN" %}
+												<li>Administrateur</li>
+											{% elseif role == "ROLE_ACCUEIL" %}
+												<li>Poste d'accueil</li>
+											{% endif %}
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</header>
+						<div class="uk-comment-body">
+							<li>{{ user.telephone }}</li>
+							<li>{{ user.email }}</li>
+							<li>{{ user.registerdate | date('d/m/Y') }}</li>
+						</div>
+						<div class="uk-comment-body uk-position-bottom-center">
+							<a id="button" class="uk-button uk-button-default uk-button-small" uk-tooltip="Attention !" href="{{ path('users_edit', {id: user.id}) }}">Modifier</a>
+							<a id="button" class="uk-button uk-button-default uk-button-small" uk-tooltip="Attention !" href="{{ path('users_delete', {id: user.id}) }}">Supprimer</a>
+						</div>
+					</article>
 				{% endif %}
-			</tbody>
-		</table>
+			{% endfor %}
+		</div>
+	{% endif %}
 {% endblock %}

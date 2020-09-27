@@ -1,0 +1,34 @@
+{% extends 'home/index.html.twig' %}
+
+{% block contenu %}
+
+
+{% if pointages[0].effectifs is not null %}
+<h3> {{pointages[0].effectifs}} </h3>
+{% endif %}
+{% if pointages[0].enfants is not null %}
+<h3> {{pointages[0].enfants}} </h3>
+{% endif %}
+{% if pointages[0].parents is not null %}
+<h3> {{pointages[0].parents}} </h3>
+{% endif %}
+
+<table class="uk-table uk-table-responsive uk-table-divider">
+    <thead>
+        <tr>
+            <th>Numéro d'enregistrement</th>
+            <th>Arrivées</th>
+            <th>Départs</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for pointage in pointages %}
+        <tr>
+            <td>{{pointage.id}}</td>
+            <td>{{pointage.arrivee  | date('H:i:s - d/m/Y') }}</td>
+            <td>{{pointage.depart  | date('H:i:s - d/m/Y') }}</td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% endblock %}

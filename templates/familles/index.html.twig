@@ -9,7 +9,7 @@
 		{% if enfants is defined and enfants %}
 			<div class="uk-child-width-1-2@m pointeuse_grid" uk-grid>
 				{% for enfant in enfants %}
-					<div id="nopad" class="uk-card uk-card-default uk-width-1-2@m">
+					<div id="NoPadding" class="uk-card uk-card-default uk-width-1-2@m">
 						<div class="uk-card-header">
 							<div class="uk-grid-small uk-flex-middle" uk-grid>
 								<div class="uk-width-auto">
@@ -54,7 +54,28 @@
 							</ul>
 						</div>
 						<div id='log' class="uk-card-footer">
-							<a class="uk-button uk-button-text" href="">Pointages</a>
+							<a uk-toggle="target: #pointagesListEnfant{{ enfant.id }}" class="uk-button uk-button-text" href="#pointagesListEnfant{{ enfant.id }}">Pointages</a>
+							<div id="pointagesListEnfant{{ enfant.id }}" uk-modal>
+								<div class="uk-modal-dialog uk-modal-body">
+									<h2 class="uk-modal-title">Liste de Pointage</h2>
+									<form action="/pointages_list" method="post">
+												<input type="hidden" name="idEnfant" value="{{enfant.id}}">
+												
+										<div>
+											<label for="FirstDate">A partir de :</label>
+											<input class="uk-input" type="date" id="FirstDate" name="FirstDate" required>
+										</div>
+										<div>
+											<label for="LastDate">Jusqu'à :</label>
+											<input class="uk-input" type="date" id="LastDate" name="LastDate" required>
+										</div>
+										<p class="uk-text-right">
+											<button id="button" class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+											<button id="button" class="uk-button uk-button-default" type="submit">Envoyer</button>
+										</p>
+									</form>
+								</div>
+							</div>
 							<a class="uk-button uk-button-text" href="">Absences</a>
 							<a class="uk-button uk-button-text" href="{{ path('enfants_edit', {id: enfant.id}) }}">Modifier</a>
 							<a class="uk-button uk-button-text" href="{{ path('enfants_delete', {id: enfant.id}) }}">Supprimer</a>
@@ -71,7 +92,7 @@
 		{% if parents is defined and parents %}
 			<div class="uk-child-width-1-2@m pointeuse_grid" uk-grid>
 				{% for parent in parents %}
-					<div id="nopad" class="uk-card uk-card-default uk-width-1-2@m">
+					<div id="NoPadding" class="uk-card uk-card-default uk-width-1-2@m">
 						<div class="uk-card-header">
 							<div class="uk-grid-small uk-flex-middle" uk-grid>
 								<div class="uk-width-auto">
@@ -95,7 +116,29 @@
 							</ul>
 						</div>
 						<div id='log' class="uk-card-footer">
-							<a class="uk-button uk-button-text" href="">Pointages</a>
+							<a uk-toggle="target: #pointagesListParent{{parent.id}}" class="uk-button uk-button-text" href="#pointagesListParent{{parent.id}}">Pointages</a>
+							<div id="pointagesListParent{{parent.id}}" uk-modal>
+								<div class="uk-modal-dialog uk-modal-body">
+									<h2 class="uk-modal-title">Liste de Pointage</h2>
+									<form action="/pointages_list" method="post">
+										<div>
+												<input type="hidden" name="idParent" value="{{parent.id}}">
+										</div>
+										<div>
+											<label for="FirstDate">A partir de :</label>
+											<input class="uk-input" type="date" id="FirstDate" name="FirstDate" required>
+										</div>
+										<div>
+											<label for="LastDate">Jusqu'à :</label>
+											<input class="uk-input" type="date" id="LastDate" name="LastDate" required>
+										</div>
+										<p class="uk-text-right">
+											<button id="button" class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+											<button id="button" class="uk-button uk-button-default" type="submit">Envoyer</button>
+										</p>
+									</form>
+								</div>
+							</div>
 							<a class="uk-button uk-button-text" href="">Absences</a>
 							<a class="uk-button uk-button-text" href="{{ path('parents_edit', {id: parent.id}) }}">Modifier</a>
 							<a class="uk-button uk-button-text" href="{{ path('parents_delete', {id: parent.id}) }}">Supprimer</a>

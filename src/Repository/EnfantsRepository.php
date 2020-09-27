@@ -70,6 +70,19 @@ class EnfantsRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+    /**
+     * recuperer un enfant complet par rapport a son id
+     */
+    public function getOneByID($id): ?Enfants
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Enfants[] Returns an array of Enfants objects
     //  */

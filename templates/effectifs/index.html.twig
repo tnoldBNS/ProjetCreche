@@ -8,7 +8,7 @@
 		{% if effectifs is defined and effectifs %}
 			<div class="uk-child-width-1-2@m pointeuse_grid" uk-grid>
 				{% for effectif in effectifs %}
-					<div id="nopad" class="uk-card uk-card-default uk-width-1-2@m">
+					<div id="NoPadding" class="uk-card uk-card-default uk-width-1-2@m">
 						<div class="uk-card-header">
 							<div class="uk-grid-small uk-flex-middle" uk-grid>
 								<div class="uk-width-auto">
@@ -29,8 +29,32 @@
 							</ul>
 						</div>
 						<div id='log' class="uk-card-footer">
-							<a class="uk-button uk-button-text" href="">Pointages</a>
-							<a class="uk-button uk-button-text" href="">Absences</a>
+							<a uk-toggle="target: #pointagesListEffectif{{effectif.id}}" class="uk-button uk-button-text" href="#pointagesListEffectif{{effectif.id}}">Pointages</a>
+							<div id="pointagesListEffectif{{effectif.id}}" uk-modal>
+								<div class="uk-modal-dialog uk-modal-body">
+									<h2 class="uk-modal-title">Liste de Pointage</h2>
+									<form action="/pointages_list" method="post">
+										<div>
+												<input type="hidden" name="idEffectif" value="{{effectif.id}}">
+										</div>
+										<div>
+											<label for="FirstDate">A partir de :</label>
+											<input class="uk-input" type="date" id="FirstDate" name="FirstDate" required>
+										</div>
+										<div>
+											<label for="LastDate">Jusqu'à :</label>
+											<input class="uk-input" type="date" id="LastDate" name="LastDate" required>
+										</div>
+										<p class="uk-text-right">
+											<button id="button" class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+											<button id="button" class="uk-button uk-button-default" type="submit">Envoyer</button>
+										</p>
+									</form>
+								</div>
+							</div>
+
+
+							<a class="uk-button uk-button-text" href="#">Absences</a>
 							<a class="uk-button uk-button-text" href="{{ path('effectifs_edit', {id: effectif.id}) }}">Modifier</a>
 							<a class="uk-button uk-button-text" href="{{ path('effectifs_delete', {id: effectif.id}) }}">Supprimer</a>
 						</div>
@@ -44,22 +68,22 @@
 			{% endif %}
 		{% endif %}
 	{% else %}
-			<button id="button" class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Effectif</button>
-			<div id="modal-example" uk-modal>
-				<div class="uk-modal-dialog uk-modal-body">
-					<h2 class="uk-modal-title">Se signaler en tant que membre du personnel</h2>
-					<form action="/emailAcces" method="post">
-						<div>
-							<label for="msg">Message :</label>
-							<input name="espace" type="hidden" value="Effectif">
-							<textarea id="msg" name="user_message"></textarea>
-						</div>
-						<p class="uk-text-right">
-							<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-							<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
-						</p>
-					</form>
-				</div>
+		<button id="button" class="uk-button uk-button-default uk-button-small" type="button" uk-toggle="target: #modal-example">Demander acces Effectif</button>
+		<div id="modal-example" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body">
+				<h2 class="uk-modal-title">Se signaler en tant que membre du personnel</h2>
+				<form action="/emailAcces" method="post">
+					<div>
+						<label for="msg">Message :</label>
+						<input name="espace" type="hidden" value="Effectif">
+						<textarea id="msg" name="user_message"></textarea>
+					</div>
+					<p class="uk-text-right">
+						<button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+						<button class="uk-button uk-button-secondary" type="submit">Envoyer</button>
+					</p>
+				</form>
 			</div>
+		</div>
 	{% endif %}
 {% endblock %}

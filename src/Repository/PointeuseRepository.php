@@ -132,8 +132,8 @@ class PointeuseRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
-            /**
-     * recuperer les pointage des parents sur une plage de temps definit par deux dates
+    /**
+     * recuperer les pointage des effectifss sur une plage de temps definit par deux dates
      */
     public function getAllEffectifsByDate($firstDate, $lastDate) {
 
@@ -149,6 +149,66 @@ class PointeuseRepository extends ServiceEntityRepository
         ->setParameter('lastDate', $lastDate);
         return $query->execute();
     }
+
+
+    /**
+     * recuperer les pointage d'un effectif sur une plage de temps definit par deux dates
+     */
+    public function getAllByDateAndIdEffectif($effectif, $firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.effectifs = :effectif
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('effectif', $effectif)
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
+
+     /**
+     * recuperer les pointage d'un enfant sur une plage de temps definit par deux dates
+     */
+    public function getAllByDateAndIdEnfant($enfant, $firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.enfants = :enfant
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('enfant', $enfant)
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
+
+     /**
+     * recuperer les pointage d'un parent sur une plage de temps definit par deux dates
+     */
+    public function getAllByDateAndIdParent($parent, $firstDate, $lastDate) {
+
+        $entityManager = $this->getEntityManager();
+        // requête DQL : liste des pointage triés par date d'arrivée
+        $query = $entityManager->createQuery(
+            "SELECT p
+                FROM App\Entity\Pointeuse p
+                WHERE p.parents = :parent
+                AND p.arrivee BETWEEN :firstDate AND :lastDate"
+        )
+        ->setParameter('parent', $parent)
+        ->setParameter('firstDate', $firstDate)
+        ->setParameter('lastDate', $lastDate);
+        return $query->execute();
+    }
+
+
 
     // /**
     //  * @return Pointeuse[] Returns an array of Pointeuse objects

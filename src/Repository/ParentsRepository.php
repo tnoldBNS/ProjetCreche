@@ -49,6 +49,19 @@ class ParentsRepository extends ServiceEntityRepository
         ->setParameter('val', $familles_id);
         return $query->execute();
     }
+    
+    /**
+     * recuperer un parent complet par rapport a son id
+     */
+    public function getOneByID($id): ?Parents
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
     // /**
     //  * @return Parents[] Returns an array of Parents objects

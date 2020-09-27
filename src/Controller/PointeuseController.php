@@ -23,18 +23,63 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class PointeuseController extends AbstractController
 {
     /**
-     * @Route("/pointeuse", name="pointeuse")
+     * @Route("/pointages_list", name="pointages_list")
+     * @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN')")
      */
-    public function index()
+    public function pointages_list()
     {
+
+        $firstDate = $_POST["FirstDate"];
+        $lastDate = $_POST["LastDate"];
+        if (!strtotime($firstDate) || !strtotime($lastDate)) {
+            return $this->render('home');
+        }
+
+        if (isset($_POST["idEffectif"])) {
+            $id = filter_var($_POST["idEffectif"], FILTER_SANITIZE_STRING);
+
+            $effectif = $this->getDoctrine()
+                ->getRepository(Effectifs::class)
+                ->getOneByID($id);
+
+            $pointages = $this->getDoctrine()
+                ->getRepository(Pointeuse::class)
+                ->getAllByDateAndIdEffectif($effectif, $firstDate, $lastDate);
+
+        } elseif (isset($_POST["idEnfant"])) {
+            $id = filter_var($_POST["idEnfant"], FILTER_SANITIZE_STRING);
+            $enfant = $this->getDoctrine()
+                ->getRepository(Enfants::class)
+                ->getOneByID($id);
+
+            $pointages = $this->getDoctrine()
+                ->getRepository(Pointeuse::class)
+                ->getAllByDateAndIdEnfant($enfant, $firstDate, $lastDate);
+
+        } else {
+            $id = filter_var($_POST["idParent"], FILTER_SANITIZE_STRING);
+            $parent = $this->getDoctrine()
+                ->getRepository(Parents::class)
+                ->getOneByID($id);
+
+            $pointages = $this->getDoctrine()
+                ->getRepository(Pointeuse::class)
+                ->getAllByDateAndIdParent($parent, $firstDate, $lastDate);
+        }
+
+
+        return $this->render('pointeuse/listePointages.html.twig', [
+            'pointages' => $pointages,
+        ]);
     }
+
     /**
      * @Route("/impression", name="impression")
      * @security("is_granted('ROLE_ADMIN')")
      */
     public function impression()
     {
-        
+
         $impressionEntity = filter_var($_POST["type"], FILTER_SANITIZE_STRING);
         $firstDate = $_POST["FirstDate"];
         $lastDate = $_POST["LastDate"];
@@ -223,7 +268,7 @@ class PointeuseController extends AbstractController
      */
     public function effectif_pointage(UserInterface $user, AuthorizationCheckerInterface $authChecker, Effectifs $effectifs)
     {
-        if (($effectifs && $effectifs->getUsers()->getId() == $user->getId()) && true === $authChecker->isGranted('ROLE_ADMIN') || true === $authChecker->isGranted('ROLE_ACCUEIL')) {
+        if (($effectifs && $effectifs->getUsers()->getId() == $user->getId()) || true === $authChecker->isGranted('ROLE_ADMIN') || true === $authChecker->isGranted('ROLE_ACCUEIL')) {
             $pointage = $this->getDoctrine()
                 ->getRepository(Pointeuse::class)
                 ->getAllByEffectifId($effectifs->getId());
