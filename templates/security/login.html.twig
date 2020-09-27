@@ -10,14 +10,13 @@
 		{% endif %}
 
 		{% if app.user %}
-			<div class="mb-3">
+			<div >
 				You are logged in as
 				{{ app.user.username }},
 				<a href="{{ path('app_logout') }}">Logout</a>
 			</div>
 		{% endif %}
 		<div class="uk-position-relative">
-			<img "src={{ asset('images\1570383184.jpg') }}" alt="">
 			<div class="uk-position-top">
 				<nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
 					<div class="uk-navbar-left">
@@ -36,9 +35,9 @@
 		<br>
 		<br>
 
-		<h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+		<h1>Connexion</h1>
 
-		<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m uk-align-center">
+		<div class="uk-card-default uk-card-body uk-width-1-2@m uk-align-center">
 			<div id="log">
 				<div class="uk-margin-small">
 					<div class="uk-inline">

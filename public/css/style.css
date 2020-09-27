@@ -49,6 +49,8 @@ h1 {
 #log {
     text-align: center;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #button {

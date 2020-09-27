@@ -13,10 +13,11 @@
 						<div class="PointageOn active">
 							<a class="uk-inline-clip uk-transition-toggle " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 								</div>
 							</a>
+							
 							<br>
 							<a class="Transmission" href="#Transmission" uk-toggle="target: #Transmission{{ enfant.id }}" uk-icon="icon: comment; ratio: 1.5"></a>
 							<div id="Transmission{{ enfant.id }}" uk-modal>
@@ -60,7 +61,7 @@
 					{% else %}
 						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
 							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
-							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+							<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 							</div>
 						</a>
@@ -73,14 +74,14 @@
 					{% if parent.lastPointeuse.depart is defined and parent.lastPointeuse.depart == null %}
 						<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
 							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
-							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+							<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
 							</div>
 						</a>
 					{% else %}
 						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
 							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
-							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+							<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
 							</div>
 						</a>
@@ -93,14 +94,14 @@
 					{% if effectif.lastPointeuse.depart is defined and effectif.lastPointeuse.depart == null %}
 						<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active" tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
 							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
-							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+							<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
 							</div>
 						</a>
 					{% else %}
 						<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
 							<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
-							<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+							<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 								<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
 							</div>
 						</a>
@@ -117,7 +118,7 @@
 							<div class="PointageOn active">
 								<a class="uk-inline-clip uk-transition-toggle " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
 									<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
-									<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+									<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 										<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 									</div>
 								</a>
@@ -163,7 +164,7 @@
 						{% else %}
 							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('enfants_pointage', {id: enfant.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ enfant.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ enfant.prenom }}</p>
 								</div>
 							</a>
@@ -178,14 +179,14 @@
 						{% if parent.lastPointeuse.depart is defined and parent.lastPointeuse.depart == null %}
 							<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
 								</div>
 							</a>
 						{% else %}
 							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('parents_pointage', {id: parent.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ parent.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ parent.prenom }}</p>
 								</div>
 							</a>
@@ -203,14 +204,14 @@
 						{% if effectif.lastPointeuse.depart is defined and effectif.lastPointeuse.depart == null %}
 							<a class="uk-inline-clip uk-transition-toggle pointeuse PointageOn active" tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
 								</div>
 							</a>
 						{% else %}
 							<a class="uk-inline-clip uk-transition-toggle pointeuse " tabindex="0" href="{{ path('effectifs_pointage', {id: effectif.id}) }}">
 								<img class="imgPointage" src="{{ asset( 'images/nomImage_image/' ~ effectif.nomImage) }}">
-								<div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-primary">
+								<div class="uk-transition-slide-top uk-position-top uk-overlay uk-overlay-primary">
 									<p style="font-size: 0.7em; text-align: center;" class="uk-h4 uk-margin-remove">{{ effectif.prenom }}</p>
 								</div>
 							</a>
