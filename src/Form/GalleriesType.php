@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -40,6 +41,16 @@ class GalleriesType extends AbstractType
                     'class' => 'uk-select',
                 ]
             ])
+            ->add('albumPrive', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => false,
+                    'Non' => true,
+                ],
+                'label' => 'Accessible aux parents ? ',
+                'attr' => [
+                    'class' => 'uk-input',
+                ]
+            ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Selectionner une Photo',
                 'required' => false,
@@ -48,6 +59,7 @@ class GalleriesType extends AbstractType
                     'type' => "file"
                 ]
             ])
+ 
             ->add('Valider', SubmitType::class, [
                 'attr' => ['class' => 'uk-button uk-button-primary uk-margin-top']
             ]);

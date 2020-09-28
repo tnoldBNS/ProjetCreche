@@ -57,6 +57,11 @@ class Galleries
      */
     private $enfants;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $albumPrive;
+
    
 
     public function __construct()
@@ -185,6 +190,18 @@ class Galleries
         });
 
         return count($check) > 0 ? false : true;
+    }
+
+    public function getAlbumPrive(): ?bool
+    {
+        return $this->albumPrive;
+    }
+
+    public function setAlbumPrive(bool $albumPrive): self
+    {
+        $this->albumPrive = $albumPrive;
+
+        return $this;
     }
     
    

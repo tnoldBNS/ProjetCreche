@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         if (true === $authChecker->isGranted('ROLE_ADMIN') || true === $authChecker->isGranted('ROLE_EFFECTIF') || true === $authChecker->isGranted('ROLE_FAMILLE') || true === $authChecker->isGranted('ROLE_ACCUEIL')) {     
           $galleries = $this->getDoctrine()
         ->getRepository(Galleries::class)
-        ->getAllRgpd(); 
+        ->getAllRgpdIfNoAlbum(); 
 
         return $this->render('home/accueil.html.twig', [
             'galleries' => $galleries,

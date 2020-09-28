@@ -33,12 +33,13 @@ class GalleriesRepository extends ServiceEntityRepository
     }
 
          /**
-     * recuperer gallerie complette si rgpd ok
+     * recuperer gallerie complete si rgpd ok et pas dans l'album privé
      */
-    public function getAllRgpd() {
+    public function getAllRgpdIfNoAlbum() {
         $qb = $this->createQueryBuilder('g')
          ->innerJoin ('g.enfants', 'e') 
-         ->andWhere('e.rgpd = TRUE');
+         ->andWhere('e.rgpd = TRUE')
+         ->andWhere('g.albumPrive = FALSE');
 
      return $qb->getQuery()->getResult();
     }
