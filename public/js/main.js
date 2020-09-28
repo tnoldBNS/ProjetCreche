@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
         locale: 'local',
         timeZone: 'Europe/paris',
         buttonText: {
-        today: 'aujourd\'hui',
-        month: 'mois',
-        week: 'semaine',
-        day: 'jour'
+            today: 'aujourd\'hui',
+            month: 'mois',
+            week: 'semaine',
+            day: 'jour'
         },
         eventSources: [
             {
@@ -52,5 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 UIkit.slider(element, options);
 UIkit.slider(element).show(index);
+UIkit.filter(element, options);
+
+
 
 

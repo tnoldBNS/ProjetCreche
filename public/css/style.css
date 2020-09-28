@@ -17,7 +17,7 @@ h1 {
 
 #wrapper {
     padding: 4em;
-    width: 75%;
+    width: 70%;
     margin: auto;
     background-color: white;
     min-width: 255px;
@@ -171,11 +171,7 @@ article{
     min-width: 230px;
     
 }
-table, tbody, tr, td, div{
-    overflow: unset !important; 
-    height: unset !important;
-    
-}
+
 .PointageOn{
     max-width: 240px;
 }
