@@ -43,8 +43,8 @@ class Users implements UserInterface
     /**
      * @var string The plain password
      * @Assert\Length(
-     *      min=6,
-     *      minMessage = "Le mot de passe doit faire au moins {{ limit }} caractères",
+     *      min=8,
+     *      minMessage = "Le mot de passe doit faire au moins 8 caractères",
      *      allowEmptyString = false
      * )
      */

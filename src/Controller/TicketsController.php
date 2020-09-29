@@ -12,12 +12,13 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * @security("is_granted('ROLE_EFFECTIF') or is_granted('ROLE_FAMILLE') or is_granted('ROLE_ADMIN') or is_granted('ROLE_ACCUEIL')")
+ * @security("is_granted('ROLE_USER')")
  */
 class TicketsController extends AbstractController
 {
     /**
      * @Route("/email")
+     * @security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') or is_granted('ROLE_EFFECTIF')")
      */
     public function sendEmail(MailerInterface $mailer)
     {
